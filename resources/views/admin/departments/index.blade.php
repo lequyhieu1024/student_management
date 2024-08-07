@@ -5,6 +5,33 @@
         <div class="mb-4">
             <a href="{{ route('departments.create') }}" class="btn btn-primary">+ {{ __('Create Department') }}</a>
         </div>
+        {{ Form::open(['method' => 'GET', 'route' => 'departments.index']) }}
+        <div class="filter row mb-4">
+            {{-- PAGINATION --}}
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center gap-1">
+                    <span>{{ __('Show') }}</span>
+                    {!! Form::select(
+                        'size',
+                        [
+                            10 => 10,
+                            20 => 20,
+                            50 => 50,
+                            100 => 100,
+                        ],
+                        request('size'),
+                        [
+                            'class' => 'form-select',
+                            'id' => 'pagination',
+                            'onchange' => 'this.form.submit()',
+                        ],
+                    ) !!}
+                    <span> {{ __('entries') }} </span>
+                </div>
+            </div>
+            {{-- PAGINATION END --}}
+        </div>
+        {!! Form::close() !!}
         <table class="table table-bordered">
             <thead>
                 <th>{{ __('ID') }}</th>

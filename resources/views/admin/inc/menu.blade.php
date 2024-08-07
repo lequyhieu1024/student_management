@@ -72,11 +72,6 @@
         </li>
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle no-warning">
-                {{-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="menu-icon  bx bx-layout">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-                </svg> --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" stroke-width="1.5"
                     fill="currentColor" class="bi bi-card-list menu-icon  bx bx-layout" viewBox="0 0 16 16">
                     <path
@@ -102,26 +97,35 @@
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle no-warning">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke-width="1.5"
-                    fill="currentColor" class="menu-icon  bx bx-layout" viewBox="0 0 16 16">
+                    fill="currentColor" class="bi bi-person-gear menu-icon  bx bx-layout" viewBox="0 0 16 16">
                     <path
-                        d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917zM8 8.46 1.758 5.965 8 3.052l6.242 2.913z" />
-                    <path
-                        d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46z" />
+                        d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
                 </svg>
-                <div data-i18n="Department"> {{ __('Transcript Manager') }} </div>
+                <div data-i18n="Department"> {{ __('Role Manager') }} </div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{ route('transcripts.index') }}" class="menu-link">
-                        <div data-i18n="Danh sách khách hàng">{{ __('Transcript List') }}</div>
+                    <a href="{{ route('roles.index') }}" class="menu-link">
+                        <div data-i18n="Danh sách khách hàng">{{ __('Role List') }}</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ route('transcripts.create') }}" class="menu-link">
-                        <div data-i18n="Tạo khách hàng mới"> {{ __('Create Transcript') }} </div>
+                    <a href="{{ route('roles.create') }}" class="menu-link">
+                        <div data-i18n="Tạo khách hàng mới"> {{ __('Create Role') }} </div>
                     </a>
                 </li>
             </ul>
+        </li>
+        <li class="menu-item">
+            <a href="{{ route('profile.edit') }}" class="menu-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" stroke-width="1.5"
+                    fill="currentColor" class="bi bi-person-circle  menu-icon  bx bx-layout" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg>
+                <div data-i18n="Tạo khách hàng mới"> {{ __('Profile Manager') }} </div>
+            </a>
         </li>
     </ul>
 </aside>

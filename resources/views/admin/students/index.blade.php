@@ -1,103 +1,103 @@
 @extends('admin.app')
 @section('content')
-    <div class="card p-4">
+    <style>
+        .badges {
+            width: 25px;
+            font-size: 1em;
+            border-radius: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            color: white;
+        }
+    </style>
+    <div class="card p-4 table-responsive">
         <h1>{{ __('Student List') }}</h1>
         <div class="mb-4">
             <a href="{{ route('students.create') }}" class="btn btn-primary">+ {{ __('Create Student') }}</a>
         </div>
         <table class="table table-bordered">
             <thead>
-                <th>{{ __('ID') }}</th>
                 <th>{{ __('Student Code') }}</th>
                 <th>{{ __('Student Name') }}</th>
                 <th>{{ __('Gender') }}</th>
                 <th>{{ __('Birthday') }}</th>
+                {{-- <th>{{ __('Total Subject Being Studied') }}</th> --}}
                 <th>{{ __('Status') }}</th>
-                <th>{{ __('Action') }}</th>
+                <th class="col-3 mb-1">{{ __('Action') }}</th>
             </thead>
             <tbody>
+                {{ Form::open(['method' => 'GET', 'route' => 'students.index']) }}
                 <div class="filter row mb-4">
                     {{-- PAGINATION --}}
                     <div class="col-6 col-md-2">
                         <div class="d-flex align-items-center gap-1">
                             <span>{{ __('Show') }}</span>
-                            <form action="{{ route('students.index') }}" method="GET" id="pagination-form">
-                                <select name="size" class="form-select" id="pagination" onchange="this.form.submit()">
-                                    <option value="10" {{ request('size') == 10 ? 'selected' : '' }}>10</option>
-                                    <option value="50" {{ request('size') == 50 ? 'selected' : '' }}>50</option>
-                                    <option value="200" {{ request('size') == 200 ? 'selected' : '' }}>200</option>
-                                    <option value="500" {{ request('size') == 500 ? 'selected' : '' }}>500</option>
-                                    <option value="3000" {{ request('size') == 3000 ? 'selected' : '' }}>3000</option>
-                                </select>
-                            </form>
+                            {!! Form::select(
+                                'size',
+                                [
+                                    10 => 10,
+                                    50 => 50,
+                                    200 => 200,
+                                    500 => 500,
+                                    3000 => 3000,
+                                ],
+                                request('size'),
+                                [
+                                    'class' => 'form-select',
+                                    'id' => 'pagination',
+                                ],
+                            ) !!}
                             <span> {{ __('entries') }} </span>
                         </div>
                     </div>
+                    {{-- PAGINATION END --}}
                 </div>
-                {{-- PAGINATION END --}}
-                <div class="filter row mb-4">
-                    <form action="{{ route('students.index') }}" method="GET">
-                        {{-- FILTER BY AGE --}}
-                        <div class="col-md-3">
-                            <div class="d-flex align-items-center gap-1">
-                                <span>{{ __('Age From') }}</span>
-                                <input type="text" class="form-control" name="age_from">
-                                <span>{{ __('To') }}</span>
-                                <input type="text" class="form-control" name="age_to">
-                            </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ __('Age From') }}</span>
+                            {{ Form::text('age_from', request('age_from'), ['class' => 'form-control']) }}
+                            <span>{{ __('To') }}</span>
+                            {{ Form::text('age_to', request('age_to'), ['class' => 'form-control']) }}
                         </div>
-                        {{-- FILTER BY AGE END --}}
-                        {{-- FILTER BY SCORE --}}
-                        <div class="col-md-3 mb-2">
-                            <div class="d-flex align-items-center gap-1">
-                                <span>{{ __('Score From') }}</span>
-                                <input type="text" class="form-control" name="score_from">
-                                <span>{{ __('To') }}</span>
-                                <input type="text" class="form-control" name="score_to">
-                            </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <div class="d-flex align-items-center gap-1">
+                            <span>{{ __('Score Average') }}</span>
+                            {{ Form::text('score_from', request('score_from'), ['class' => 'form-control']) }}
+                            <span>{{ __('To') }}</span>
+                            {{ Form::text('score_to', request('score_to'), ['class' => 'form-control']) }}
                         </div>
-                        {{-- FILTER BY SCORE END --}}
-                        {{-- FILTER BY SCORE --}}
-                        {{-- NETWORK --}}
-                        <div class="col-md-2 mb-2">
-                            <div class="d-flex align-items-center gap-1">
-                                <select name="network" class="form-select">
-                                    <option>-- {{ __('Chose Network') }} --</option>
-                                    <option value="1" {{ request('network') == 1 ? 'selected' : '' }}>Vinaphone
-                                    </option>
-                                    <option value="2" {{ request('network') == 2 ? 'selected' : '' }}>Viettel</option>
-                                    <option value="3" {{ request('network') == 3 ? 'selected' : '' }}>Mobifone
-                                    </option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <div class="d-flex align-items-center gap-1">
+                            {{ Form::select('network', \App\Enums\Network::getSelectOptions(), request('network'), ['class' => 'form-select']) }}
                         </div>
-                        {{-- NETWORK END --}}
-                        {{-- SUBJECT --}}
-                        <div class="col-md-2 mb-2">
-                            <div class="d-flex align-items-center gap-1">
-                                <select name="status" class="form-select">
-                                    <option>--{{ __('Chose Status') }}--</option>
-                                    <option value="1" {{ request('status') == 1 ? 'selected' : '' }}>Đã học hết môn
-                                    </option>
-                                    <option value="2" {{ request('status') == 2 ? 'selected' : '' }}>Chưa học hết môn
-                                    </option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <div class="d-flex align-items-center gap-1">
+                            {{ Form::select('status', \App\Enums\Status::getSelectOptions(), request('status'), ['class' => 'form-select']) }}
                         </div>
-                        {{-- SUBJECT END --}}
-                        <div class="col-md-2">
-                            <button class="btn btn-primary">{{ __('Search') }}</button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ route('students.index') }}" class="btn btn-info"><i
+                                class="bi bi-arrow-clockwise"></i></a>
+                        {{ Form::button('<i class="bi bi-search"></i>', ['class' => 'btn btn-primary', 'type' => 'submit']) }}
+                    </div>
                 </div>
+                {{ Form::close() }}
     </div>
     @foreach ($students as $student)
         <tr>
-            <td>{{ $student->id }}</td>
             <td>{{ $student->student_code }}</td>
-            <td>{{ $student->name }}</td>
-            <td>{{ $student->gender ? __('Male') : __('Female') }}</td>
+            <td>{{ $student->user->name }}</td>
+            <td>{{ \App\Enums\Gender::getLabel($student->gender) }}
+            </td>
             <td>{{ date('d/m/Y', strtotime($student->birthday)) }}</td>
+            {{-- <td>{{ $student->subjects->count() }}</td> --}}
             <td>
                 @if ($student->status == 0)
                     <span class="badge bg-danger">{{ __('Banned') }}</span>
@@ -139,6 +139,19 @@
                     'onclick' => 'return confirm("' . __('Are you sure?') . '")',
                 ]) !!}
                 {!! Form::close() !!}
+                <a href="{{ route('students.subject', $student->id) }}" title="Xem những môn đang học"
+                    class="btn btn-secondary position-relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                        class="bi bi-card-checklist" viewBox="0 0 16 16">
+                        <path
+                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
+                        <path
+                            d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />
+                    </svg>
+                    <span class="position-absolute top-0 start-100 translate-middle badges rounded-pill bg-danger">
+                        {{ $student->subjects->count() }}
+                    </span>
+                </a>
             </td>
         </tr>
     @endforeach

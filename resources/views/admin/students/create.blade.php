@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     {!! Form::label('name', __('Student Name'), ['class' => 'mb-1']) !!} <span class="text-danger">(*)</span>
-                    {!! Form::text('name', old('name'), [
+                    {!! Form::text('name', null, [
                         'class' => 'form-control',
                         'placeholder' => __('Student Name'),
                     ]) !!}
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     {!! Form::label('email', __('Email'), ['class' => 'mb-1']) !!} <span class="text-danger">(*)</span>
-                    {!! Form::email('email', old('email'), [
+                    {!! Form::email('email', null, [
                         'class' => 'form-control',
                         'placeholder' => __('Email'),
                     ]) !!}
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group col-md-4 mb-3">
                     {!! Form::label('phone', __('Phone'), ['class' => 'mb-1']) !!} <span class="text-danger">(*)</span>
-                    {!! Form::number('phone', old('phone'), [
+                    {!! Form::number('phone', null, [
                         'class' => 'form-control',
                         'placeholder' => __('Phone'),
                     ]) !!}
@@ -40,9 +40,8 @@
                 </div>
                 <div class="form-group col-md-4 mb-3">
                     {!! Form::label('gender', __('Gender'), ['class' => 'mb-1']) !!} <span class="text-danger">(*)</span>
-                    {!! Form::select('gender', [true => __('Male'), false => __('Female')], old('gender'), [
+                    {!! Form::select('gender', \App\Enums\Gender::getSelectOptions(), null, [
                         'class' => 'form-control',
-                        'placeholder' => '--' . __('Chose Gender') . '--',
                     ]) !!}
                     @error('gender')
                         <div class="text-danger">{{ $message }}</div>
@@ -50,7 +49,7 @@
                 </div>
                 <div class="form-group col-md-4 mb-3">
                     {!! Form::label('birthday', __('Birthday'), ['class' => 'mb-1']) !!} <span class="text-danger">(*)</span>
-                    {!! Form::date('birthday', old('birthday'), [
+                    {!! Form::date('birthday', null, [
                         'class' => 'form-control',
                         'placeholder' => __('Birthday'),
                     ]) !!}
@@ -60,7 +59,7 @@
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     {!! Form::label('address', __('Address'), ['class' => 'mb-1']) !!} <span class="text-danger">(*)</span>
-                    {!! Form::text('address', old('address'), [
+                    {!! Form::text('address', null, [
                         'class' => 'form-control',
                         'placeholder' => __('Address'),
                     ]) !!}
@@ -74,7 +73,7 @@
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     {!! Form::label('department_id', __('Chose Department'), ['class' => 'mb-1']) !!} <span class="text-danger">(*)</span>
-                    {!! Form::select('department_id', $departments, old('department_id'), [
+                    {!! Form::select('department_id', $departments, null, [
                         'class' => 'form-control',
                         'placeholder' => '--' . __('Chose Department') . '--',
                     ]) !!}

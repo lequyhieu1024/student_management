@@ -3,44 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Repositories\StudentRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    protected $studentRepository;
+    protected $userRepository;
+
+    public function __construct(StudentRepository $studentRepository, UserRepository $userRepository)
+    {
+        $this->studentRepository = $studentRepository;
+        $this->userRepository = $userRepository;
+    }
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $this->userRepository->show(Auth::user()->id);
+        return view('profile.edit', compact('user'));
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function updateAvatar(ProfileUpdateRequest $request)
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $data['avatar'] = upload_image($request->file('avatar'));
+        $user = $this->userRepository->show(Auth::user()->id);
+        $student = $this->studentRepository->update($data, $user->student->id);
+        if (!$student) {
+            return redirect()->back()->with('error', __('Update Failed'));
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->back()->with('success', __('Updated Successfully'));
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],

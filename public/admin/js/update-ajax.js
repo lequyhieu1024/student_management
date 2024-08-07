@@ -1,29 +1,30 @@
 $(document).ready(function () {
-    $("#updateForm").on("submit", function (event) {
-        event.preventDefault(); // Ngăn chặn gửi form theo cách truyền thống
+    $('#updateForm').on('submit', function (event) {
+        event.preventDefault();
 
-        var formData = new FormData(this);
         var form = $(this);
-        var actionUrl = form.attr("action"); // Lấy URL từ thuộc tính action của form
-        console.log(formData);
+        var formData = new FormData(form[0]);
+        formData.append('_method', 'PUT');
+        var id = form.data('id');
         $.ajax({
-            url: actionUrl,
-            type: "PUT",
+            url: 'students/'+id,
+            type: 'POST',
             data: formData,
-            processData: false,
-            contentType: false,
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
+            contentType: false, 
+            processData: false, 
             success: function (response) {
-                alert(response.success);
-            },
-            error: function (xhr) {
-                var errors = xhr.responseJSON.errors;
-                for (var key in errors) {
-                    console.log(errors[key]);
+                if (response.success) {
+                    $('#updateStudentModal').modal('hide');
+                    alert(response.message);
+                    location.reload();
+                } else {
+                    alert(response.message);
                 }
             },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                console.log('An error occurred. Please try again.');
+            }
         });
     });
 });

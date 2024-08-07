@@ -1,8 +1,10 @@
 @extends('admin.app')
+
 @section('content')
     <div class="card p-4">
         <div class="card-title">
-            <h1 class="text-primary">{{ $content = isset($department) ? __('Update Department') : __('Create Department') }}
+            <h1 class="text-primary">
+                {{ $content = isset($department) ? __('Update Department') : __('Create Department') }}
             </h1>
         </div>
         @if (isset($department))
@@ -25,25 +27,25 @@
                     'class' => 'form-control',
                     'placeholder' => __('Department Name'),
                 ]) !!}
-                @if ('errors')
+                @if ($errors->has('name'))
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
             </div>
             <div class="form-group col-md-6">
-                {!! Form::label('name', __('Description')) !!}
+                {!! Form::label('description', __('Description')) !!}
                 {!! Form::textarea('description', null, [
                     'class' => 'form-control',
                     'placeholder' => __('Description'),
                 ]) !!}
-                @if ('errors')
+                @if ($errors->has('description'))
                     <span class="text-danger">{{ $errors->first('description') }}</span>
                 @endif
             </div>
-
         </div>
 
         <div class="form-group mt-2">
             {!! Form::submit($content, ['class' => 'btn btn-primary']) !!}
+            {!! Form::close() !!}
             <a href="{{ route('departments.index') }}" class="btn btn-info">{{ __('Back') }}</a>
             @if (isset($department))
                 {!! Form::open([
@@ -59,6 +61,5 @@
                 {!! Form::close() !!}
             @endif
         </div>
-        {!! Form::close() !!}
     </div>
 @endsection

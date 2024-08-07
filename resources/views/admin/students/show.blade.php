@@ -3,7 +3,7 @@
         <div class="modal-content data">
             <div class="modal-header modal-header-image">
                 <h3 class="modal-title border-bottom"><img width="30" class="rounded"
-                        src="/{{ $student->avatar }}">|{{ $student->name }} -
+                        src="/{{ $student->avatar }}">|{{ $student->user->name }} -
                     {{ $student->student_code }} </h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <i class="las la-times" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
                     <div class="col-md-12 border-bottom mb-2 mt-2">
                         <div class="row">
                             <div class="col-md-4">Email:</div>
-                            <div class="col-md-8 "> {{ $student->email }} </div>
+                            <div class="col-md-8 "> {{ $student->user->email }} </div>
                         </div>
                     </div>
                     <div class="col-md-12 border-bottom mb-2 mt-2">
@@ -44,7 +44,7 @@
                     <div class="col-md-12 border-bottom mb-2 mt-2">
                         <div class="row">
                             <div class="col-md-4"> {{ __('Department') }} :</div>
-                            <div class="col-md-8"> {{ $student->department_name }} </div>
+                            <div class="col-md-8"> {{ $student->department->name }} </div>
                         </div>
                     </div>
                 </div>

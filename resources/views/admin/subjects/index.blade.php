@@ -4,17 +4,61 @@
         <h1>{{ __('Subject List') }}</h1>
         <div class="mb-4">
             <a href="{{ route('subjects.create') }}" class="btn btn-primary">+ {{ __('Create Subject') }}</a>
+            {{-- @can('self_register_subject') --}}
+            <a href="#" onclick="viewModal2()" class="btn btn-warning btn-register d-none">+
+                {{ __('Register Subject') }}</a>
+            {{-- @endcan --}}
         </div>
+
+        {{ Form::open(['method' => 'GET', 'route' => 'subjects.index']) }}
+        <div class="filter row mb-4">
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center gap-1">
+                    <span>{{ __('Show') }}</span>
+                    {!! Form::select(
+                        'size',
+                        [
+                            10 => 10,
+                            20 => 20,
+                            50 => 50,
+                            100 => 100,
+                        ],
+                        request('size'),
+                        [
+                            'class' => 'form-select',
+                            'id' => 'pagination',
+                            'onchange' => 'this.form.submit()',
+                        ],
+                    ) !!}
+                    <span> {{ __('entries') }} </span>
+                </div>
+            </div>
+        </div>
+        {!! Form::close() !!}
         <table class="table table-bordered">
             <thead>
+                {{-- @can('self_register_subject') --}}
+                <th>{{ __('Option') }}</th>
+                {{-- @endcan --}}
                 <th>{{ __('ID') }}</th>
                 <th>{{ __('Subject Name') }}</th>
                 <th>{{ __('Description') }}</th>
-                <th>{{ __('Action') }}</th>
+                <th class="col-2">{{ __('Action') }}</th>
+                {{-- @can('self_register_subject') --}}
+                <th class="col-1">{{ __('Register Subject') }}</th>
+                {{-- @endcan --}}
             </thead>
             <tbody>
                 @foreach ($subjects as $subject)
                     <tr>
+                        {{-- @can('self_register_subject') --}}
+                        <td class="col-1">
+                            <input type="checkbox" name="subjects[]" class="subjects"
+                                {{ in_array($subject->id, $unregistedSubject) ? 'disabled' : '' }}
+                                data-id="{{ $subject->id }}" data-name="{{ $subject->name }}"
+                                onchange="toggleUpdateButton('subjects', 'btn-register')">
+                        </td>
+                        {{-- @endcan --}}
                         <td>{{ $subject->id }}</td>
                         <td>{{ $subject->name }}</td>
                         <td>{{ $subject->description }}</td>
@@ -36,10 +80,38 @@
                             {!! Form::button('<i class="bi bi-trash-fill"></i>', [
                                 'type' => 'submit',
                                 'class' => 'btn btn-danger',
-                                'onclick' => 'return confirm("' . __('Are you sure?') . '")',
+                                'onclick' => !in_array($subject->id, $subjectsHasScores->toArray())
+                                    ? 'return confirm("' . __('Are you sure?') . '")'
+                                    : 'return false',
+                                'disabled' => in_array($subject->id, $subjectsHasScores->toArray()) ? true : false,
                             ]) !!}
                             {!! Form::close() !!}
                         </td>
+                        {{-- @can('self_register_subject') --}}
+                        <td>
+                            @if (!in_array($subject->id, $unregistedSubject))
+                                {!! Form::open([
+                                    'route' => ['students.store-register-subject', auth()->user()->student->id],
+                                    'style' => 'display:inline;',
+                                ]) !!}
+                                {!! Form::hidden('subject_id', $subject->id) !!}
+                                {!! Form::button('<i class="bi bi-plus"></i>', [
+                                    'title' => __('Register'),
+                                    'type' => 'submit',
+                                    'class' => 'btn btn-primary',
+                                    'onclick' => 'return confirm("' . __('Are you sure?') . '")',
+                                ]) !!}
+                                {!! Form::close() !!}
+                            @else
+                                {!! Form::button('<i class="bi bi-check-lg"></i>', [
+                                    'type' => 'button',
+                                    'class' => 'btn btn-secondary',
+                                    'disabled' => true,
+                                ]) !!}
+                            @endif
+
+                        </td>
+                        {{-- @endcan --}}
                     </tr>
                 @endforeach
             </tbody>
@@ -48,4 +120,24 @@
             {{ $subjects->links() }}
         </div>
     </div>
+    <div class="modal fade" id="registerSubjectModal" tabindex="-1" aria-labelledby="registerSubjectModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title border-bottom"> {{ __('Confirm') . ' ' . __('Register Subject') }} </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerSubjectForm" method="POST"
+                        action="{{ route('students.store-register-subject', auth()->user()->student->id) }}">
+                        @csrf
+                        <div class="row" id="subjectsContainer"></div>
+                        <button type="submit" class="btn btn-primary">{{ __('Confirm') }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('admin/js/register-subject.js') }}"></script>
 @endsection

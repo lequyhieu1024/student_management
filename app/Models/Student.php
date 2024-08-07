@@ -17,6 +17,7 @@ class Student extends Model
         'gender',
         'birthday',
         'address',
+        'status',
         'department_id',
     ];
 
@@ -24,10 +25,12 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function department(){
+    public function department()
+    {
         return $this->belongsTo(Department::class);
     }
-    public function subjects(){
-        return $this->belongsToMany(Subject::class)->withPivot('score')->withTimestamps();
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class)->withPivot('id', 'score')->withTimestamps();
     }
 }

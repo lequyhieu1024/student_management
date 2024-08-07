@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\DepartmentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
-use App\Http\Controllers\Admin\TransriptController;
+use App\Http\Controllers\Admin\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +16,27 @@ use App\Http\Controllers\Admin\TransriptController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/dashboard', function () {
+
+Route::get('dashboard', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard');
 
 Route::resource('students', StudentController::class);
+
+Route::get('students/{student}/subject', [StudentController::class, 'getSubjects'])->name('students.subject');
+
+Route::get('students/{student}/{subject}/edit-score', [StudentController::class, 'editScore'])->name('students.edit-score');
+
+Route::put('students/{student}/{subject}', [StudentController::class, 'updateScore'])->name('students.update-score');
+
+Route::get('register-subject/{student}', [StudentController::class, 'registerSubject'])->name('students.register-subject');
+
+Route::post('register-subject/{student}', [StudentController::class, 'storeRegisterSubject'])->name('students.store-register-subject');
+
+Route::post('students/update-scores', [StudentController::class, 'updateScores'])->name('students.update-scores');
+
 Route::resource('departments', DepartmentController::class);
+
 Route::resource('subjects', SubjectController::class);
-Route::resource('transcripts', TransriptController::class);
+
+Route::resource('roles', RoleController::class);

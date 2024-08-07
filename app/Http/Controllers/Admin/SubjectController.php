@@ -4,21 +4,31 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubjectFormRequest;
+use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
+use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
     protected $subjectReposittory;
-    public function __construct(SubjectRepository $subjectReposittory){
+    protected $studentReposittory;
+    public function __construct(SubjectRepository $subjectReposittory, StudentRepository $studentReposittory)
+    {
         $this->subjectReposittory = $subjectReposittory;
+        $this->studentReposittory = $studentReposittory;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = $this->subjectReposittory->getAll();
-        return view('admin.subjects.index',compact('subjects'));
+        $subjectsHasScores = $this->subjectReposittory->getSubjectHasScores();
+        $unregistedSubject = [];
+        if (isset(auth()->user()->student->id)) {
+            $unregistedSubject = $this->studentReposittory->getUnregistedSubjectByStudent(auth()->user()->student->id)->subjects->pluck('id')->toArray();
+        }
+        $subjects = $this->subjectReposittory->getAll($request->all());
+        return view('admin.subjects.index', compact('subjects', 'subjectsHasScores', 'unregistedSubject'));
     }
 
     /**
@@ -35,7 +45,7 @@ class SubjectController extends Controller
     public function store(SubjectFormRequest $request)
     {
         $this->subjectReposittory->create($request->all());
-        return redirect()->route('subjects.index')->with('success', __('Created Successfully'));        
+        return redirect()->route('subjects.index')->with('success', __('Created Successfully'));
     }
 
     /**
@@ -43,8 +53,10 @@ class SubjectController extends Controller
      */
     public function edit(string $id)
     {
-        $subject = $this->subjectReposittory->detail($id);
-        return view('admin.subjects.form',compact('subject'));
+        $subjectsHasScores = $this->subjectReposittory->getSubjectHasScores();
+
+        $subject = $this->subjectReposittory->findOrFail($id);
+        return view('admin.subjects.form', compact('subject', 'subjectsHasScores'));
     }
 
     /**
@@ -52,7 +64,7 @@ class SubjectController extends Controller
      */
     public function update(SubjectFormRequest $request, string $id)
     {
-        $this->subjectReposittory->update($request->all(),$id);
+        $this->subjectReposittory->update($request->all(), $id);
         return redirect()->route('subjects.index')->with('success', __('Updated Successfully'));
     }
 
@@ -61,7 +73,12 @@ class SubjectController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->subjectReposittory->delete($id);
-        return redirect()->route('subjects.index')->with('success', __('Deleted Successfully'));
+        $hasScores = $this->subjectReposittory->getSubjectHasScore($id);
+        if (!$hasScores) {
+            $this->subjectReposittory->deleteSubject($id);
+            return redirect()->route('subjects.index')->with('success', __('Deleted Successfully'));
+        } else {
+            return redirect()->route('subjects.index')->with('error', __('Can not delete because subject has scores'));
+        }
     }
 }

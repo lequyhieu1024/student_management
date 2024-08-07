@@ -44,21 +44,23 @@
 
         <div class="form-group mt-2">
             {!! Form::submit($content, ['class' => 'btn btn-primary']) !!}
+            {!! Form::close() !!}
             <a href="{{ route('subjects.index') }}" class="btn btn-info">{{ __('Back') }}</a>
             @if (isset($subject))
-                {!! Form::open([
-                    'method' => 'DELETE',
-                    'route' => ['subjects.destroy', $subject->id],
-                    'style' => 'display:inline;',
-                ]) !!}
-                {!! Form::button(__('Delete'), [
-                    'type' => 'submit',
-                    'class' => 'btn btn-danger',
-                    'onclick' => 'return confirm("' . __('Are you sure?') . '")',
-                ]) !!}
-                {!! Form::close() !!}
+                @if (!in_array($subject->id, $subjectsHasScores->toArray()))
+                    {!! Form::open([
+                        'method' => 'DELETE',
+                        'route' => ['subjects.destroy', $subject->id],
+                        'style' => 'display:inline;',
+                    ]) !!}
+                    {!! Form::button(__('Delete'), [
+                        'type' => 'submit',
+                        'class' => 'btn btn-danger',
+                        'onclick' => 'return confirm("' . __('Are you sure?') . '")',
+                    ]) !!}
+                    {!! Form::close() !!}
+                @endif
             @endif
         </div>
-        {!! Form::close() !!}
     </div>
 @endsection

@@ -2,43 +2,40 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Student;
 use Exception;
+use App\Jobs\SendEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreStudentRequest;
 use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Hash;
 use App\Repositories\StudentRepository;
-use App\Http\Requests\UpdateStudentRequest;
+use App\Repositories\SubjectRepository;
+use App\Http\Requests\StudentFormRequest;
 use App\Repositories\DepartmentRepository;
+use App\Http\Requests\RegisterSubjectFormRequest;
 
 class StudentController extends Controller
 {
     protected $studentRepository;
     protected $userRepository;
     protected $departmentRepository;
+    protected $subjectRepository;
+
     /**
      * Display a listing of the resource.
      */
-    public function __construct(StudentRepository $studentRepository, UserRepository $userRepository, DepartmentRepository $departmentRepository){
+    public function __construct(StudentRepository $studentRepository, UserRepository $userRepository, DepartmentRepository $departmentRepository, SubjectRepository $subjectRepository)
+    {
         $this->studentRepository = $studentRepository;
         $this->userRepository = $userRepository;
         $this->departmentRepository = $departmentRepository;
+        $this->subjectRepository = $subjectRepository;
     }
+
     public function index(Request $request)
-    {   
-        $q = [];
-        $q['pageSize'] = $request->query('size', 10);
-        $q['ageFrom'] = $request->query('age_from');
-        $q['ageTo'] = $request->query('age_to');
-        $q['scoreFrom'] = $request->query('score_from');
-        $q['scoreTo'] = $request->query('score_to');
-        $q['network'] = $request->query('network');
-        $q['status'] = $request->query('status');
-        $students = $this->studentRepository->filter($q);
-        return view('admin.students.index',compact('students'));
+    {
+        $students = $this->studentRepository->filter($request->all());
+        return view('admin.students.index', compact('students'));
     }
 
     /**
@@ -47,42 +44,30 @@ class StudentController extends Controller
     public function create()
     {
         $departments = $this->departmentRepository->getNameAndIds();
-        return view('admin.students.create',compact('departments',));
+        return view('admin.students.create', compact('departments'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentRequest $request)
+    public function store(StudentFormRequest $request)
     {
-        try{
+        try {
             DB::beginTransaction();
             $data = $request->validated();
-            if($request->hasFile('avatar')){
+            if ($request->hasFile('avatar')) {
                 $data['avatar'] = upload_image($request->file('avatar'));
             }
-            
-            $user = $this->userRepository->create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-            ]);
-            $student = $this->studentRepository->create([
-                'user_id' => $user->id,
-                'student_code' => date('Y').$user->id,
-                'avatar' => $data['avatar'],
-                'phone' => $data['phone'],
-                'gender' => $data['gender'],
-                'birthday' => $data['birthday'],
-                'address' => $data['address'],
-                'department_id' => $data['department_id'],
-            ]);
+            $user = $this->userRepository->create($data);
+            $data['user_id'] = $user->id;
+            $data['student_code'] = date('Y') . $user->id;
+            $this->studentRepository->create($data);
+            SendEmailJob::dispatch($data);
             DB::commit();
             return redirect()->route('students.index')->with('success', __('Create Student Successfully'));
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
-            return redirect()->route('students.index')->with('error', $e->getMessage());
         }
     }
 
@@ -91,7 +76,8 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        $student = $this->studentRepository->detail($id);
+        $student = $this->studentRepository->show($id);
+        // dd($student);
         return view('admin.students.show', compact('student'));
     }
 
@@ -100,42 +86,35 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        $student = $this->studentRepository->detail($id);
+        $student = $this->studentRepository->show($id);
         $departments = $this->departmentRepository->getNameAndIds();
-        return view('admin.students.edit', compact('student','departments'));
+        return view('admin.students.edit', compact('student', 'departments'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentRequest $request, string $id)
+    public function update(StudentFormRequest $request, string $id)
     {
-        try{
+        try {
             DB::beginTransaction();
-            $data = $request->validated();
-            if($request->hasFile('avatar')){
+            $data = $request->all();
+            if ($request->hasFile('avatar')) {
                 $data['avatar'] = upload_image($request->file('avatar'));
             }
-            
-            $this->userRepository->update([
-                'name' => $data['name'],
-                'email' => $data['email'],
-            ],$id);
-            $this->studentRepository->update([
-                'avatar' => $data['avatar'],
-                'phone' => $data['phone'],
-                'gender' => $data['gender'],
-                'birthday' => $data['birthday'],
-                'address' => $data['address'],
-                'department_id' => $data['department_id'],
-            ], $id);
+            $this->userRepository->updateUser($data, $this->studentRepository->show($id)->user_id);
+            $this->studentRepository->updateStudent($data, $id);
             DB::commit();
-            return response(['success' => true,
-                'message' => __('Update Student Successfully')
-            ],200);
-        }catch(Exception $e){
+            return response()->json([
+                'success' => true,
+                'message' => 'Student updated successfully!',
+            ]);
+        } catch (Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred. Please try again.',
+            ], 500);
         }
     }
 
@@ -144,7 +123,60 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->studentRepository->delete($id);
-        return redirect()->route('students.index')->with('success', __('Delete Student Successfully'));
+        try {
+            DB::beginTransaction();
+            $student = $this->studentRepository->show($id);
+            $student->delete($id);
+            $student->user->delete();
+            DB::commit();
+            return redirect()->route('students.index')->with('success', __('Delete Student Successfully'));
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+        }
+    }
+
+    public function getSubjects($id)
+    {
+        $students = $this->studentRepository->getSubjectByStudent($id);
+        return view('admin.students.subjects-by-student', compact('students'));
+    }
+
+    public function editScore($studentId, $subjectId)
+    {
+        $score = $this->studentRepository->getScoreByStudentSubjectId($studentId, $subjectId);
+        return view('admin.students.update-score', compact('score', 'studentId', 'subjectId'));
+    }
+    public function updateScores(Request $request)
+    {
+        $this->studentRepository->updateScore($request->student_id, $request->scores);
+        return redirect()->route('students.subject', $request->student_id)->with('success', __('Updated Successfully'));
+    }
+    public function registerSubject($id)
+    {
+        $subjects = $this->subjectRepository->getSubjectDoesntHasStudent($id);
+        return view('admin.students.register-subject', compact('subjects', 'id'));
+    }
+    public function storeRegisterSubject(RegisterSubjectFormRequest $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $student = $this->studentRepository->findOrFail($id);
+            if (!empty(array_intersect($student->subjects->pluck('id')->toArray(), $request->subject_id))) {
+                if (!auth()->user()->student) {
+                    return redirect()->route('students.subject', $id)->with('error', __('Registation Failed'));
+                }
+                return redirect()->back()->with('error', __('Registation Failed'));
+            }
+            $this->studentRepository->registerSubject($id, $request->subject_id);
+            DB::commit();
+            if (!auth()->user()->student) {
+                return redirect()->route('students.subject', $id)->with('success', __('Registation Successfully'));
+            }
+            return redirect()->back()->with('success', __('Registation Successfully'));
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 }

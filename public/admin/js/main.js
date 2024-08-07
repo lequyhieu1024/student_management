@@ -161,3 +161,26 @@ var viewModal = (url) => {
         }
     });
 };
+
+// public/js/app.js
+
+$(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+});
+
+function toggleUpdateButton(checkbox_name,button_name) {
+    const checkboxes = document.querySelectorAll('.'+checkbox_name);
+    const updateButton = document.querySelector('.'+button_name);
+
+    const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+    if (anyChecked) {
+        updateButton.classList.remove('d-none');
+    } else {
+        updateButton.classList.add('d-none');
+    }
+}

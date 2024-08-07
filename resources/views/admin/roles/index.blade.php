@@ -1,28 +1,26 @@
 @extends('admin.app')
 @section('content')
     <div class="card p-4">
-        <h1>{{ __('Transcript List') }}</h1>
+        <h1>{{ __('Role List') }}</h1>
         <div class="mb-4">
-            <a href="{{ route('transcripts.create') }}" class="btn btn-primary">+ {{ __('Create Transcript') }}</a>
+            <a href="{{ route('roles.create') }}" class="btn btn-primary">+ {{ __('Create Role') }}</a>
         </div>
-        <table class="table table-bordered">
-            <thead>
-                <th>{{ __('Student Code') }}</th>
-                <th>{{ __('Student Name') }}</th>
-                <th>{{ __('Subject Name') }}</th>
-                <th>{{ __('Score') }}</th>
-                <th>{{ __('Action') }}</th>
+        <table class="table table-bordered table-responsive">
+            <thead class="header">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th>{{ __('Role Name') }}</th>
+                    <th>{{ __('Action') }}</th>
+                </tr>
             </thead>
             <tbody>
-                @foreach ($transcripts as $transcript)
-                    {{-- @dd($transcript) --}}
+                @foreach ($roles as $role)
                     <tr>
-                        {{-- <td>{{ $transcript->students->student_code }}</td>
-                        <td>{{ $transcript->students->name }}</td>
-                        <td>{{ $transcript->subjects->name }}</td>
-                        <td>{{ $transcript->pivot->score }}</td> --}}
-                        <td>
-                            <a href="{{ route('transcripts.edit', $transcript->id) }}" class="btn btn-warning">
+                        <td class="text-center col-1">{{ $role->id }}</td>
+                        <td>{{ $role->name }}</td>
+                        <td class="col-2 text-nowrap">
+                            {{-- @canany(['update_role']) --}}
+                            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path
@@ -31,24 +29,28 @@
                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                 </svg>
                             </a>
+                            {{-- @endcanany --}}
+                            {{-- @canany(['destroy_role']) --}}
                             {!! Form::open([
                                 'method' => 'DELETE',
-                                'route' => ['transcripts.destroy', $transcript->id],
+                                'route' => ['roles.destroy', $role->id],
                                 'style' => 'display:inline;',
+                                'onclick' => 'return confirm("' . __('Are you sure?') . '")',
                             ]) !!}
                             {!! Form::button('<i class="bi bi-trash-fill"></i>', [
                                 'type' => 'submit',
                                 'class' => 'btn btn-danger',
-                                'onclick' => 'return confirm("' . __('Are you sure?') . '")',
                             ]) !!}
                             {!! Form::close() !!}
+                            {{-- @endcanany --}}
+
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <div class="col-12">
-            {{ $transcripts->links() }}
+        <div class="d-flex justify-content-end mt-2">
+            {{ $roles->links() }}
         </div>
     </div>
 @endsection

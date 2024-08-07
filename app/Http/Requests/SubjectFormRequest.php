@@ -22,7 +22,7 @@ class SubjectFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', request()->isMethod('PUT') ? 'unique:subjects,name,' . $this->route('subject') : 'unique:subjects,name'],
         ];
     }
 }
