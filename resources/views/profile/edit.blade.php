@@ -5,7 +5,7 @@
             <div class="card p-4">
                 <div class="card-title">
                     <h1>
-                        Tài khoản
+                        {{ __('Account') }}
                     </h1>
                 </div>
                 <div class="card-body">
@@ -17,20 +17,18 @@
                             @csrf
                             @method('PUT')
                             <label for="upload" class="btn btn-outline-secondary  me-2 mb-4" tabindex="0">
-                                <span>Thay ảnh đại diện</span>
+                                <span><i class="bi bi-upload"></i> {{ __('Change Avatar') }} </span>
                                 <input type="file" id="upload" name="avatar" class="account-file-input" hidden
                                     accept="image/*" onchange="this.form.submit()" />
                             </label>
-                            <p class="text-muted mb-0">Tải lên ảnh đại diện của bạn</p>
                             @if ($errors->has('avatar'))
                                 <span class="text-danger">{{ $errors->first('avatar') }}</span>
                             @endif
                         </form>
                     </div>
                     <div class="mt-5">
-                        <a href="{{ route('students.subject', auth()->user()->student->id) }}" class="btn btn-primary">Xem
-                            bảng
-                            điểm của tôi</a>
+                        <a href="{{ route('students.subject', auth()->user()->student->id) }}" class="btn btn-primary">
+                            {{ __('My Transcript') }}</a>
                     </div>
                 </div>
                 <hr class="my-0" />
@@ -43,7 +41,7 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="firstName" class="form-label">Họ và tên</label>
+                            <label for="firstName" class="form-label"> {{ __('Student Name') }} </label>
                             <input class="form-control" type="text" value="{{ $user->name }}" disabled />
                         </div>
                         <div class="mb-3 col-md-6">
@@ -52,28 +50,28 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="phone" class="form-label">Số điện thoại</label>
+                            <label for="phone" class="form-label">{{ __('Phone') }}</label>
                             <input class="form-control" type="text" value="{{ $user->student->phone }}" disabled />
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="address" class="form-label">Ngày sinh</label>
+                            <label for="address" class="form-label"> {{ __('Birthday') }} </label>
                             <input class="form-control" type="text" value="{{ $user->student->birthday }}" disabled />
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="address" class="form-label">Địa chỉ</label>
+                            <label for="address" class="form-label"> {{ __('Address') }} </label>
                             <input class="form-control" value="{{ $user->student->address }}" disabled />
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="address" class="form-label">Giới tính</label>
+                            <label for="address" class="form-label"> {{ __('Gender') }} </label>
                             <input class="form-control" value="{{ \App\Enums\Gender::getLabel($user->student->gender) }}"
                                 disabled />
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="address" class="form-label">Khoa</label>
+                            <label for="address" class="form-label"> {{ __('Department') }} </label>
                             <input class="form-control" value="{{ $user->student->department->name }}" disabled />
                         </div>
                     </div>

@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\StudentsExport;
 use Exception;
 use App\Jobs\SendEmailJob;
 use Illuminate\Http\Request;
+use App\Imports\StudentsImport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportStudentExcelRequest;
 use App\Repositories\UserRepository;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
 use App\Http\Requests\StudentFormRequest;
 use App\Repositories\DepartmentRepository;
 use App\Http\Requests\RegisterSubjectFormRequest;
+use Illuminate\Console\View\Components\Alert;
 
 class StudentController extends Controller
 {
@@ -138,7 +143,7 @@ class StudentController extends Controller
 
     public function getSubjects($id)
     {
-        $students = $this->studentRepository->getSubjectByStudent($id);
+        $students = $this->studentRepository->show($id);
         return view('admin.students.subjects-by-student', compact('students'));
     }
 
@@ -178,5 +183,20 @@ class StudentController extends Controller
             DB::rollBack();
             throw $th;
         }
+    }
+    public function getTemplate()
+    {
+        return Excel::download(new StudentsExport, 'students_subjects_scores.xlsx');
+    }
+    public function import(ImportStudentExcelRequest $request)
+    {
+        $import = new StudentsImport();
+        Excel::import($import, $request->file('file'));
+        $errors = $import->getErrors();
+
+        if (count($errors) > 0) {
+            return response()->json(['errors' => $errors], 404);
+        }
+        return response()->json(['success' => __('Import Successfully')]);
     }
 }

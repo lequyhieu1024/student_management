@@ -35,6 +35,10 @@ Route::post('register-subject/{student}', [StudentController::class, 'storeRegis
 
 Route::post('students/update-scores', [StudentController::class, 'updateScores'])->name('students.update-scores');
 
+Route::post('excel/import-student', [StudentController::class, 'import'])->name('students.import');
+
+Route::get('excel/export-template', [StudentController::class, 'getTemplate'])->name('students.get-template');
+
 Route::resource('departments', DepartmentController::class);
 
 Route::resource('subjects', SubjectController::class);
