@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
 use App\Enums\Network;
+use App\Imports\StudentsImport;
 
 class StudentRepository extends BaseRepository
 {
@@ -87,16 +88,7 @@ class StudentRepository extends BaseRepository
 
     public function show($id)
     {
-        return $this->model->with('user', 'department')->findOrFail($id);
-    }
-    public function getSubjectByStudent($id)
-    {
-        return $this->model->with(['subjects', 'user'])->findOrFail($id);
-    }
-
-    public function getUnregistedSubjectByStudent($id)
-    {
-        return $this->model->with('subjects')->findOrFail($id);
+        return $this->model->with('user', 'department', 'subjects')->findOrFail($id);
     }
 
     public function getScoreByStudentSubjectId($studentId, $subjectId)

@@ -25,7 +25,7 @@ class SubjectController extends Controller
         $subjectsHasScores = $this->subjectReposittory->getSubjectHasScores();
         $unregistedSubject = [];
         if (isset(auth()->user()->student->id)) {
-            $unregistedSubject = $this->studentReposittory->getUnregistedSubjectByStudent(auth()->user()->student->id)->subjects->pluck('id')->toArray();
+            $unregistedSubject = $this->studentReposittory->show(auth()->user()->student->id)->subjects->pluck('id')->toArray();
         }
         $subjects = $this->subjectReposittory->getAll($request->all());
         return view('admin.subjects.index', compact('subjects', 'subjectsHasScores', 'unregistedSubject'));
