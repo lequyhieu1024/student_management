@@ -23,8 +23,10 @@
                     </p>
                 </div>
             </div>
+            {{--            @dd(isset(auth()->user()->student->id));--}}
             <div>
-                <a href="{{ route('students.index') }}" class="btn btn-info">{{ __('Back') }}</a>
+                <a href="{{ isset(auth()->user()->student->id) ? route('profile.edit') : route('students.index') }}"
+                   class="btn btn-info">{{ __('Back') }}</a>
             </div>
         </div>
         <div class="card-content">
@@ -33,68 +35,79 @@
                     {{ __('Subject List') }}
                 </div>
                 <div>
-                    <a onclick="viewModal2()" class="btn btn-warning d-none btn-update"><i class="bi bi-pen"></i>
-                        {{ __('Update Score') }}</a>
-                    <a href="{{ route('students.register-subject', $students->id) }}" class="btn btn-primary">+
-                        {{ __('Register Subject') }}</a>
+                    @can('update_score')
+                        <a onclick="viewModal2()" class="btn btn-warning d-none btn-update"><i class="bi bi-pen"></i>
+                            {{ __('Update Score') }}</a>
+                    @endcan
+                    @canany(['register_subject','self_register_subject'])
+                        <a href="{{ route('students.register-subject', $students->id) }}" class="btn btn-primary">+
+                            {{ __('Register Subject') }}</a>
+                    @endcanany
                 </div>
             </h2>
             <div class="card-content__content table-responsive">
                 <table class="table table-bordered">
                     <thead>
+                    @can('update_score')
                         <th>{{ __('Option') }}</th>
-                        <th>{{ __('STT') }}</th>
-                        <th>{{ __('Subject Name') }}</th>
-                        <th>{{ __('Score') }}</th>
+                    @endcan
+                    <th>{{ __('STT') }}</th>
+                    <th>{{ __('Subject Name') }}</th>
+                    <th>{{ __('Score') }}</th>
                     </thead>
                     <tbody>
-                        @forelse ($students->subjects as $index => $subject)
-                            <tr>
+                    @forelse ($students->subjects as $index => $subject)
+                        <tr>
+                            @can('update_score')
                                 <td class="col-1">
                                     <input type="checkbox" name="student_subjects[]" class="student_subject"
-                                        value="{{ $subject->pivot->id }}" data-subject-id="{{ $subject->id }}"
-                                        data-subject-name="{{ $subject->name }}"
-                                        data-score="{{ $subject->pivot->score ? $subject->pivot->score : '' }}"
-                                        onchange="toggleUpdateButton('student_subject','btn-update' )">
-
+                                           value="{{ $subject->pivot->id }}" data-subject-id="{{ $subject->id }}"
+                                           data-subject-name="{{ $subject->name }}"
+                                           data-score="{{ $subject->pivot->score ? $subject->pivot->score : '' }}"
+                                           onchange="toggleUpdateButton('student_subject','btn-update' )">
                                 </td>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $subject->name }}</td>
-                                <td class="col-2">
-                                    <div class="position-relative">
-                                        <input type="text" disabled name="score" class="form-control pr-5"
-                                            value="{{ $subject->pivot->score ? $subject->pivot->score : 'N/A' }}" />
+                            @endcan
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $subject->name }}</td>
+                            <td class="col-2">
+                                <div class="position-relative">
+                                    <input type="text" disabled name="score" class="form-control pr-5"
+                                           value="{{ $subject->pivot->score ? $subject->pivot->score : 'N/A' }}"/>
+                                    @can('update_score')
                                         <button type="button"
-                                            onclick="viewModal(`{{ route('students.edit-score', [$students->id, $subject->id]) }}`)"
-                                            class="btn btn-outline-warning position-absolute"
-                                            style="top: 0; right: 0; height: 100%;">
+                                                onclick="viewModal(`{{ route('students.edit-score', [$students->id, $subject->id]) }}`)"
+                                                class="btn btn-outline-warning position-absolute"
+                                                style="top: 0; right: 0; height: 100%;">
                                             @if ($subject->pivot->score)
                                                 <i class="bi bi-pen"></i>
                                             @else
                                                 <i class="bi bi-plus"></i>
                                             @endif
                                         </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center">{{ __('No data') }}</td>
-                            </tr>
-                        @endforelse
-                        <tr>
-                            <td colspan="3"></td>
-                            <td class="col-2">
-                                {{ __('Score Average') }} : <b>{{ $students->subjects->avg('pivot.score') ?? 0.0 }}</b>
+                                    @endcan
+                                </div>
                             </td>
                         </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">{{ __('No data') }}</td>
+                        </tr>
+                    @endforelse
+                    <tr>
+                        <td @can('update_score') colspan="3" @else colspan="2" @endcan></td>
+                        <td class="col-2">
+                            {{ __('Score Average') }} :<b> <b>{{ $students->subjects->avg('pivot.score') ?? 0.0 }}</b>
+                            </b>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="updateScoreModal" tabindex="-1" aria-labelledby="updateScoreModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateScoreModal" tabindex="-1" aria-labelledby="updateScoreModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -103,9 +116,10 @@
                 </div>
                 <div class="modal-body">
                     <form id="updateScoreForm" method="POST" action="{{ route('students.update-scores') }}"
-                        onsubmit="return validator()">
+                          onsubmit="return validator()">
                         @csrf
-                        <div class="row" id="subjectsContainer"></div>
+                        <div id="subjectsContainer"></div>
+                        <div id="selectContainer"></div>
                         <input type="hidden" name="student_id" id="studentId" value="{{ $students->id }}">
                         <button type="submit" class="btn btn-primary">{{ __('Update Score') }}</button>
                     </form>

@@ -22,6 +22,10 @@ abstract class BaseRepository implements RepositoryInterface
         return $this->model->paginate($data['size'] ?? 10);
     }
 
+    public function all(){
+        return $this->model->all();
+    }
+
     public function create(array $data)
     {
         return $this->model->create($data);
@@ -30,6 +34,11 @@ abstract class BaseRepository implements RepositoryInterface
     public function findOrFail($id)
     {
         return $this->model->findOrFail($id);
+    }
+
+    public function find($id)
+    {
+        return $this->model->find($id);
     }
 
     public function update(array $data, $id)
