@@ -80,7 +80,7 @@
     </div>
     <script>
         document.querySelectorAll('.selectSection').forEach(selectSectionCheckbox => {
-            selectSectionCheckbox.addEventListener('change', function() {
+            selectSectionCheckbox.addEventListener('change', function () {
                 const groupIndex = this.getAttribute('data-group');
                 const checkboxes = document.querySelectorAll(
                     `input.permission-checkbox[data-group="${groupIndex}"]`);
@@ -91,7 +91,7 @@
         });
 
         // Handle global "Select All" functionality
-        document.getElementById('selectAll').addEventListener('change', function() {
+        document.getElementById('selectAll').addEventListener('change', function () {
             const checkboxes = document.querySelectorAll('input[name="permissions[]"]');
             checkboxes.forEach(checkbox => {
                 checkbox.checked = this.checked;

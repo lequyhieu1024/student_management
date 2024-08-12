@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\StudentsExport;
+use App\Models\Student;
+use App\Repositories\RoleRepository;
 use Exception;
 use App\Jobs\SendEmailJob;
 use Illuminate\Http\Request;
@@ -17,7 +19,6 @@ use App\Repositories\SubjectRepository;
 use App\Http\Requests\StudentFormRequest;
 use App\Repositories\DepartmentRepository;
 use App\Http\Requests\RegisterSubjectFormRequest;
-use Illuminate\Console\View\Components\Alert;
 
 class StudentController extends Controller
 {
@@ -25,16 +26,26 @@ class StudentController extends Controller
     protected $userRepository;
     protected $departmentRepository;
     protected $subjectRepository;
+    protected $roleRepository;
 
     /**
      * Display a listing of the resource.
      */
-    public function __construct(StudentRepository $studentRepository, UserRepository $userRepository, DepartmentRepository $departmentRepository, SubjectRepository $subjectRepository)
+    public function __construct(StudentRepository $studentRepository, UserRepository $userRepository, DepartmentRepository $departmentRepository, SubjectRepository $subjectRepository, RoleRepository $roleRepository)
     {
+        $this->middleware('permission:list_student')->only(['index']);
+        $this->middleware('permission:create_student')->only(['create', 'store']);
+        $this->middleware('permission:show_student')->only(['show']);
+        $this->middleware('permission:update_student')->only(['edit', 'update']);
+        $this->middleware('permission:destroy_student')->only(['destroy']);
+        $this->middleware('permission:update_score')->only(['editScore', 'updateScores']);
+        $this->middleware('permission:self_register_subject|register_subject')->only(['registerSubject', 'storeRegisterSubject']);
+        $this->middleware('permission:import_excel')->only(['import', 'getTemplate']);
         $this->studentRepository = $studentRepository;
         $this->userRepository = $userRepository;
         $this->departmentRepository = $departmentRepository;
         $this->subjectRepository = $subjectRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     public function index(Request $request)
@@ -63,7 +74,8 @@ class StudentController extends Controller
             if ($request->hasFile('avatar')) {
                 $data['avatar'] = upload_image($request->file('avatar'));
             }
-            $user = $this->userRepository->create($data);
+            dd($this->roleRepository->findOrFail(16)->name);
+            $user = $this->userRepository->create($data)->assignRole($this->roleRepository->findOrFail(16)->name);
             $data['user_id'] = $user->id;
             $data['student_code'] = date('Y') . $user->id;
             $this->studentRepository->create($data);
@@ -82,7 +94,6 @@ class StudentController extends Controller
     public function show(string $id)
     {
         $student = $this->studentRepository->show($id);
-        // dd($student);
         return view('admin.students.show', compact('student'));
     }
 
@@ -106,6 +117,9 @@ class StudentController extends Controller
             $data = $request->all();
             if ($request->hasFile('avatar')) {
                 $data['avatar'] = upload_image($request->file('avatar'));
+                $this->studentRepository->findOrFail($id)->avatar ? unlink($this->studentRepository->findOrFail($id)->avatar) : '';
+            } else {
+                $data['avatar'] = $this->studentRepository->findOrFail($id)->avatar;
             }
             $this->userRepository->updateUser($data, $this->studentRepository->show($id)->user_id);
             $this->studentRepository->updateStudent($data, $id);
@@ -131,8 +145,9 @@ class StudentController extends Controller
         try {
             DB::beginTransaction();
             $student = $this->studentRepository->show($id);
+            unlink($student->avatar);
             $student->delete($id);
-            $student->user->delete();
+            // $student->user->delete();
             DB::commit();
             return redirect()->route('students.index')->with('success', __('Delete Student Successfully'));
         } catch (Exception $e) {
@@ -167,7 +182,10 @@ class StudentController extends Controller
         try {
             DB::beginTransaction();
             $student = $this->studentRepository->findOrFail($id);
-            if (!empty(array_intersect($student->subjects->pluck('id')->toArray(), $request->subject_id))) {
+            $studentSubject = $student->subjects->pluck('id')->toArray();
+            $subejectId = is_array($request->subject_id) ? $request->subject_id : [$request->subject_id];
+
+            if (!empty(array_intersect($studentSubject, $subejectId))) {
                 if (!auth()->user()->student) {
                     return redirect()->route('students.subject', $id)->with('error', __('Registation Failed'));
                 }
@@ -198,5 +216,13 @@ class StudentController extends Controller
             return response()->json(['errors' => $errors], 404);
         }
         return response()->json(['success' => __('Import Successfully')]);
+    }
+    public function getListSubjectAjax()
+    {
+        $subjects = $this->subjectRepository->all();
+        return response()->json([
+            'success' => true,
+            'subject' => $subjects
+        ], 200);
     }
 }
