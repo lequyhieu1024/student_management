@@ -27,14 +27,12 @@ class StudentRepository extends BaseRepository
         // dd($data['age_from']);
         if (isset($data['age_from'])) {
             // dd(1);
-            $today = Carbon::now();
-            $dateFrom = $today->copy()->subYears($data['age_from'])->startOfDay()->toDateString();
+            $dateFrom = Carbon::now()->subYears($data['age_from'])->startOfDay()->toDateString();
             $query->where('birthday', '<=', $dateFrom);
         }
 
         if (isset($data['age_to'])) {
-            $today = Carbon::now();
-            $dateTo = $today->copy()->subYears($data['age_to'])->endOfDay()->toDateString();;
+            $dateTo = Carbon::now()->subYears($data['age_to'])->endOfDay()->toDateString();;
             $query->where('birthday', '>=', $dateTo);
         }
 
@@ -76,14 +74,7 @@ class StudentRepository extends BaseRepository
     public function updateStudent($data, $id)
     {
         $student = $this->model->findOrFail($id);
-        return $student->update([
-            'avatar' => $data['avatar'] ?? $student->avatar,
-            'gender' => $data['gender'],
-            'birthday' => $data['birthday'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
-            'department_id' => $data['department_id'],
-        ]);
+        return $student->update($data);
     }
 
     public function show($id)

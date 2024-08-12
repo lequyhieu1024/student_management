@@ -47,19 +47,21 @@
             {!! Form::submit($content, ['class' => 'btn btn-primary']) !!}
             {!! Form::close() !!}
             <a href="{{ route('departments.index') }}" class="btn btn-info">{{ __('Back') }}</a>
-            @if (isset($department))
-                {!! Form::open([
-                    'method' => 'DELETE',
-                    'route' => ['departments.destroy', $department->id],
-                    'style' => 'display:inline;',
-                ]) !!}
-                {!! Form::button(__('Delete'), [
-                    'type' => 'submit',
-                    'class' => 'btn btn-danger',
-                    'onclick' => 'return confirm("' . __('Are you sure?') . '")',
-                ]) !!}
-                {!! Form::close() !!}
-            @endif
+            @can('destroy_department')
+                @if (isset($department))
+                    {!! Form::open([
+                        'method' => 'DELETE',
+                        'route' => ['departments.destroy', $department->id],
+                        'style' => 'display:inline;',
+                    ]) !!}
+                    {!! Form::button(__('Delete'), [
+                        'type' => 'submit',
+                        'class' => 'btn btn-danger',
+                        'onclick' => 'return confirm("' . __('Are you sure?') . '")',
+                    ]) !!}
+                    {!! Form::close() !!}
+                @endif
+            @endcan
         </div>
     </div>
 @endsection

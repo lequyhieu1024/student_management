@@ -26,7 +26,6 @@
                 @endif
             </div>
         </div>
-
         <div class="form-group mt-2">
             @if ($subjects->isNotEmpty())
                 {!! Form::submit(__('Register Subject'), ['class' => 'btn btn-primary']) !!}

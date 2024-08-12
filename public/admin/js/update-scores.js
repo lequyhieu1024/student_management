@@ -1,6 +1,30 @@
 
 
 function viewModal2() {
+    let listSubject = [];
+    $(document).ready(function(){
+        let subjectUrl =  BASE_URL+'/admin/list-subject-ajax';
+        $.ajax({
+            url: subjectUrl,
+            type: 'GET',
+            success: function (response) {
+                if (response.success) {
+                    listSubject = response.data;
+
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                console.log('An error occurred. Please try again.');
+            }
+        })
+    });
+    console.log(listSubject);
+
+
+    //
     const checkboxes = document.querySelectorAll('.student_subject:checked');
     const subjectsContainer = document.getElementById('subjectsContainer');
 
@@ -11,8 +35,12 @@ function viewModal2() {
         const subjectName = checkbox.getAttribute('data-subject-name');
         const score = checkbox.getAttribute('data-score');
         const inputHtml = `
-        <div class="mb-3 col-6">
+        <div class="mb-3">
             <label for="score-${subjectId}" class="form-label">${subjectName}</label>
+            <select name="" id="">
+                <option value="1"></option>
+
+</select>
             <input type="text" class="form-control" id="score-${subjectId}" name="scores[${subjectId}]" value="${score}"/>
             <span class="text-danger" id="error-${subjectId}"></span>
         </div>`

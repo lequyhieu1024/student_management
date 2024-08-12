@@ -14,6 +14,11 @@ class SubjectController extends Controller
     protected $studentReposittory;
     public function __construct(SubjectRepository $subjectReposittory, StudentRepository $studentReposittory)
     {
+        $this->middleware('permission:list_subject')->only(['index']);
+        $this->middleware('permission:create_subject')->only(['create','store']);
+        $this->middleware('permission:show_subject')->only(['show']);
+        $this->middleware('permission:update_subject')->only(['edit','update']);
+        $this->middleware('permission:destroy_subject')->only(['destroy']);
         $this->subjectReposittory = $subjectReposittory;
         $this->studentReposittory = $studentReposittory;
     }
