@@ -36,7 +36,7 @@
                 </div>
                 <div>
                     @can('update_score')
-                        <a onclick="viewModal2()" class="btn btn-warning d-none btn-update"><i class="bi bi-pen"></i>
+                        <a onclick="viewModal2({{$students->id}})" class="btn btn-warning d-none btn-update"><i class="bi bi-pen"></i>
                             {{ __('Update Score') }}</a>
                     @endcan
                     @canany(['register_subject','self_register_subject'])
@@ -60,7 +60,7 @@
                         <tr>
                             @can('update_score')
                                 <td class="col-1">
-                                    <input type="checkbox" name="student_subjects[]" class="student_subject"
+                                    <input type="checkbox" style="width: 30px; height: 30px;" name="student_subjects[]" class="student_subject"
                                            value="{{ $subject->pivot->id }}" data-subject-id="{{ $subject->id }}"
                                            data-subject-name="{{ $subject->name }}"
                                            data-score="{{ $subject->pivot->score ? $subject->pivot->score : '' }}"
@@ -115,11 +115,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <button class="btn btn-primary addBtn">+</button>
                     <form id="updateScoreForm" method="POST" action="{{ route('students.update-scores') }}"
                           onsubmit="return validator()">
                         @csrf
                         <div id="subjectsContainer"></div>
-                        <div id="selectContainer"></div>
                         <input type="hidden" name="student_id" id="studentId" value="{{ $students->id }}">
                         <button type="submit" class="btn btn-primary">{{ __('Update Score') }}</button>
                     </form>

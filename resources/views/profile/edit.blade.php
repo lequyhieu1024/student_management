@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="{{ asset($user->avatar) }}" alt="user-avatar" class="d-block rounded" height="100"
+                        <img src="{{ $user->avatar }}" alt="user-avatar" class="d-block rounded" height="100"
                              width="100"/>
                         <form class="button-wrapper" method="post"
                               action="{{ route('profile.update-avatar', $user->id) }}"

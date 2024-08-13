@@ -74,7 +74,7 @@ class StudentController extends Controller
             if ($request->hasFile('avatar')) {
                 $data['avatar'] = upload_image($request->file('avatar'));
             }
-            dd($this->roleRepository->findOrFail(16)->name);
+//            dd($this->roleRepository->findOrFail(16)->name);
             $user = $this->userRepository->create($data)->assignRole($this->roleRepository->findOrFail(16)->name);
             $data['user_id'] = $user->id;
             $data['student_code'] = date('Y') . $user->id;
@@ -167,16 +167,19 @@ class StudentController extends Controller
         $score = $this->studentRepository->getScoreByStudentSubjectId($studentId, $subjectId);
         return view('admin.students.update-score', compact('score', 'studentId', 'subjectId'));
     }
+
     public function updateScores(Request $request)
     {
         $this->studentRepository->updateScore($request->student_id, $request->scores);
         return redirect()->route('students.subject', $request->student_id)->with('success', __('Updated Successfully'));
     }
+
     public function registerSubject($id)
     {
         $subjects = $this->subjectRepository->getSubjectDoesntHasStudent($id);
         return view('admin.students.register-subject', compact('subjects', 'id'));
     }
+
     public function storeRegisterSubject(RegisterSubjectFormRequest $request, $id)
     {
         try {
@@ -202,10 +205,12 @@ class StudentController extends Controller
             throw $th;
         }
     }
+
     public function getTemplate()
     {
         return Excel::download(new StudentsExport, 'students_subjects_scores.xlsx');
     }
+
     public function import(ImportStudentExcelRequest $request)
     {
         $import = new StudentsImport();
@@ -217,12 +222,13 @@ class StudentController extends Controller
         }
         return response()->json(['success' => __('Import Successfully')]);
     }
-    public function getListSubjectAjax()
+
+    public function getListSubjectAjax($id)
     {
-        $subjects = $this->subjectRepository->all();
+        $subjects = $this->subjectRepository->getSubjectByStudentId($id);
         return response()->json([
             'success' => true,
-            'subject' => $subjects
+            'subjects' => $subjects
         ], 200);
     }
 }

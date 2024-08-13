@@ -39,7 +39,7 @@ Route::post('excel/import-student', [StudentController::class, 'import'])->name(
 
 Route::get('excel/export-template', [StudentController::class, 'getTemplate'])->name('students.get-template');
 
-Route::get('list-subject-ajax', [StudentController::class, 'getListSubjectAjax']);
+Route::get('list-subject-ajax/{id}', [StudentController::class, 'getListSubjectAjax']);
 
 Route::resource('departments', DepartmentController::class);
 

@@ -17,37 +17,30 @@ class StudentRepository extends BaseRepository
 
     public function filter(array $data)
     {
-        // dd($q);
-        $query = $this->model->with('user', 'department', 'subjects');
+        $query = $this->model->with('user', 'subjects');
 
         if (isset($data['status'])) {
             $query->where('status', $data['status']);
         }
-        // Lọc tuổi
-        // dd($data['age_from']);
         if (isset($data['age_from'])) {
-            // dd(1);
             $dateFrom = Carbon::now()->subYears($data['age_from'])->startOfDay()->toDateString();
             $query->where('birthday', '<=', $dateFrom);
         }
-
         if (isset($data['age_to'])) {
             $dateTo = Carbon::now()->subYears($data['age_to'])->endOfDay()->toDateString();;
             $query->where('birthday', '>=', $dateTo);
         }
+        if (isset($data['score_from']) || isset($data['score_to'])) {
+            $query->whereHas('subjects', function ($query) use ($data) {
+                $query->select(DB::raw('AVG(score) as avg_score'))
+                    ->groupBy('student_id');
 
-        if (isset($data['score_from'])) {
-            $query->whereHas('subjects', function ($query) use ($data) {
-                $query->select(DB::raw('AVG(score) as avg_score'))
-                    ->groupBy('student_id')
-                    ->having('avg_score', '>=', $data['score_from']);
-            });
-        }
-        if (isset($data['score_to'])) {
-            $query->whereHas('subjects', function ($query) use ($data) {
-                $query->select(DB::raw('AVG(score) as avg_score'))
-                    ->groupBy('student_id')
-                    ->having('avg_score', '<=', $data['score_to']);
+                if (isset($data['score_from'])) {
+                    $query->having('avg_score', '>=', $data['score_from']);
+                }
+                if (isset($data['score_to'])) {
+                    $query->having('avg_score', '<=', $data['score_to']);
+                }
             });
         }
         if (isset($data['network'])) {
@@ -66,8 +59,6 @@ class StudentRepository extends BaseRepository
                     break;
             }
         }
-
-
         return $query->paginate($data['size'] ?? 10);
     }
 
@@ -96,6 +87,7 @@ class StudentRepository extends BaseRepository
             return null;
         }
     }
+
     public function updateScore($studentId, $scores)
     {
         foreach ($scores as $subjectId => $score) {
@@ -106,6 +98,7 @@ class StudentRepository extends BaseRepository
         }
         return $student;
     }
+
     public function registerSubject($studentId, $subjectId)
     {
         $student = $this->model->findOrFail($studentId);

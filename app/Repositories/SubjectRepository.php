@@ -35,4 +35,10 @@ class SubjectRepository extends BaseRepository
             $query->where('student_id', $id);
         })->pluck('name', 'id');
     }
+    public function getSubjectByStudentId($studentId)
+    {
+        return $this->model->whereHas('students', function ($query) use ($studentId) {
+            $query->where('student_id', $studentId);
+        })->get();
+    }
 }
