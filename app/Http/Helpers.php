@@ -9,7 +9,6 @@ if (!function_exists('upload_image')) {
 
             return 'storage/uploads/' . $imageName;
         }
-
         return null;
     }
 }

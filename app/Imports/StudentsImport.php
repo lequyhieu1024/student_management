@@ -20,33 +20,26 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
      */
     public function collection(Collection $rows)
     {
-        // dd($rows);
+        $studentIds = $rows->pluck('ma_sinh_vien')->toArray();
+        $students = Student::whereIn('student_code', $studentIds)->with('subjects')->get();
         foreach ($rows as $row) {
-
-            $studentCode = $row['ma_sinh_vien'];
-            $subjectId = $row['id_mon_hoc'];
-            $score = $row['diem_mon_hoc'];
-
-            if (empty($studentCode) || empty($subjectId)) {
+            if (empty($row['ma_sinh_vien']) || empty($row['id_mon_hoc'])) {
                 $this->errors[] = "Student code or Subject ID is missing.";
-                continue;
+                return;
             }
 
-            $student = Student::where('student_code', $studentCode)->first();
-
+            $student = $students->firstWhere('student_code', $row['ma_sinh_vien']);
             if (!$student) {
-                $this->errors[] = "Student with code $studentCode not found.";
-                continue;
+                $this->errors[] = "Student with code {$row['ma_sinh_vien']} not found.";
+                return;
             }
 
-            if (!Subject::find($subjectId)) {
-                $this->errors[] = "Subject with ID $subjectId not found.";
-                continue;
+            if (!$student->subjects->contains('id', $row['id_mon_hoc'])) {
+                $this->errors[] = "Subject with ID {$row['id_mon_hoc']} not found for student with code {$row['ma_sinh_vien']}.";
+                return;
             }
 
-            if (Subject::find($subjectId)) {
-                $student->subjects()->syncWithoutDetaching([$subjectId => ['score' => $score]]);
-            }
+            $student->subjects()->syncWithoutDetaching([$row['id_mon_hoc'] => ['score' => $row['diem_mon_hoc']]]);
         }
     }
     public function rules(): array
