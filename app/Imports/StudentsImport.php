@@ -25,18 +25,18 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
         foreach ($rows as $row) {
             if (empty($row['ma_sinh_vien']) || empty($row['id_mon_hoc'])) {
                 $this->errors[] = "Student code or Subject ID is missing.";
-                return false;
+                return;
             }
 
             $student = $students->firstWhere('student_code', $row['ma_sinh_vien']);
             if (!$student) {
                 $this->errors[] = "Student with code {$row['ma_sinh_vien']} not found.";
-                return false;
+                return;
             }
 
             if (!$student->subjects->contains('id', $row['id_mon_hoc'])) {
                 $this->errors[] = "Subject with ID {$row['id_mon_hoc']} not found for student with code {$row['ma_sinh_vien']}.";
-                return false;
+                return;
             }
 
             $student->subjects()->syncWithoutDetaching([$row['id_mon_hoc'] => ['score' => $row['diem_mon_hoc']]]);

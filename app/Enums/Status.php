@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum Status: int
 {
-    case BANNED = 0;
+    case BANNED = 4;
     case NOT_STUDIED_YET = 1;
     case STUDYING = 2;
     case FINISHED = 3;

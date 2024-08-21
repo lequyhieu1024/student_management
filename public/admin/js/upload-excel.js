@@ -1,7 +1,6 @@
     $(document).ready(function() {
-    $('#importExelForm').on('submit', function(e) {
+    $('#importExcelForm').on('submit', function(e) {
         e.preventDefault();
-
         let formData = new FormData(this);
 
         $.ajax({

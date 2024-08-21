@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
 use App\Enums\Network;
-use App\Imports\StudentsImport;
 
 class StudentRepository extends BaseRepository
 {
@@ -17,11 +16,8 @@ class StudentRepository extends BaseRepository
 
     public function filter(array $data)
     {
-        $query = $this->model->with('user', 'subjects');
+        $query = $this->model->select('id', 'user_id', 'student_code', 'gender', 'birthday', 'status')->with('user:id,name', 'subjects:id');
 
-        if (isset($data['status'])) {
-            $query->where('status', $data['status']);
-        }
         if (isset($data['age_from'])) {
             $dateFrom = Carbon::now()->subYears($data['age_from'])->startOfDay()->toDateString();
             $query->where('birthday', '<=', $dateFrom);
@@ -43,21 +39,34 @@ class StudentRepository extends BaseRepository
                 }
             });
         }
-        if (isset($data['network'])) {
-            $networkEnum = Network::from($data['network']);
-            switch ($networkEnum) {
-                case Network::VINAPHONE:
-                    $query->whereRaw("phone REGEXP '^081|^082|^083|^084|^085'");
-                    break;
-                case Network::VIETTEL:
-                    $query->whereRaw("phone REGEXP '^032|^033|^034|^035|^036|^037|^038|^039|^099|^097|^098|^086'");
-                    break;
-                case Network::MOBIFONE:
-                    $query->whereRaw("phone REGEXP '^070|^076|^077|^078|^079'");
-                    break;
-                default:
-                    break;
+
+        if (!empty($data['network']) && array_filter($data['network'])) {
+            $data['network'] = array_filter($data['network']);
+            $conditions = [];
+            foreach ($data['network'] as $network) {
+                $networkEnum = Network::from($network);
+                switch ($networkEnum) {
+                    case Network::VINAPHONE:
+                        $conditions[] = "phone REGEXP '^08[2-5]'";
+                        break;
+                    case Network::VIETTEL:
+                        $conditions[] = "phone REGEXP '^03[2-9]|^09[0-9]|^086'";
+                        break;
+                    case Network::MOBIFONE:
+                        $conditions[] = "phone REGEXP '^07[0-9]'";
+                        break;
+                    default:
+                        break;
+                }
             }
+            if (!empty($conditions)) {
+                $query->whereRaw(implode(' OR ', $conditions));
+            }
+        }
+
+        if (!empty($data['status']) && array_filter($data['status'])) {
+            $data['status'] = array_filter($data['status']);
+            $query->whereIn('status', $data['status']);
         }
         return $query->paginate($data['size'] ?? 10);
     }
@@ -90,13 +99,8 @@ class StudentRepository extends BaseRepository
 
     public function updateScore($studentId, $scores)
     {
-        foreach ($scores as $subjectId => $score) {
-            $student = $this->model->with(['subjects' => function ($query) use ($subjectId) {
-                $query->where('subjects.id', $subjectId);
-            }])->findOrFail($studentId);
-            $student->subjects()->updateExistingPivot($subjectId, ['score' => $score]);
-        }
-        return $student;
+        $student = $this->findOrFail($studentId);
+        $student->subjects()->syncWithoutDetaching($scores);
     }
 
     public function registerSubject($studentId, $subjectId)
@@ -104,7 +108,7 @@ class StudentRepository extends BaseRepository
         $student = $this->model->findOrFail($studentId);
         $student->subjects()->attach($subjectId);
         if ($student->status == \App\Enums\Status::NOT_STUDIED_YET->value) {
-            $student->update(['status' => 2]);
+            $student->update(['status' => \App\Enums\Status::STUDYING->value]);
         }
         return $student;
     }

@@ -22,8 +22,13 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                console.log(xhr.responseText);
-                console.log('An error occurred. Please try again.');
+                let errors = xhr.responseJSON.errors;
+                $('.text-danger').remove();
+                $.each(errors, function (field, messages) {
+                    let input = $('[name="' + field + '"]');
+                    let errorHtml = '<span class="text-danger">' + messages.join('<br>') + '</span>';
+                    input.after(errorHtml);
+                });
             }
         });
     });

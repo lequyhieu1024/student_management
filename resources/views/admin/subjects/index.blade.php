@@ -39,100 +39,100 @@
         {!! Form::close() !!}
         <table class="table table-bordered">
             <thead>
-            @can('self_register_subject')
-                <th>{{ __('Option') }}</th>
-            @endcan
-            <th>{{ __('ID') }}</th>
-            <th>{{ __('Subject Name') }}</th>
-            <th>{{ __('Description') }}</th>
-            @canany(['update_subject','destroy_subject'])
-                <th class="col-2">{{ __('Action') }}</th>
-            @endcanany
-            @can('self_register_subject')
-                <th class="col-1">{{ __('Register Subject') }}</th>
-            @endcan
+                @can('self_register_subject')
+                    <th>{{ __('Option') }}</th>
+                @endcan
+                <th>{{ __('ID') }}</th>
+                <th>{{ __('Subject Name') }}</th>
+                <th>{{ __('Description') }}</th>
+                @canany(['update_subject', 'destroy_subject'])
+                    <th class="col-2">{{ __('Action') }}</th>
+                @endcanany
+                @can('self_register_subject')
+                    <th class="col-1">{{ __('Register Subject') }}</th>
+                @endcan
             </thead>
             <tbody>
-            @foreach ($subjects as $subject)
-                <tr>
-                    @can('self_register_subject')
-                        <td class="col-1">
-                            <input type="checkbox" name="subjects[]" class="subjects"
-                                   {{ in_array($subject->id, $unregistedSubject) ? 'disabled' : '' }}
-                                   data-id="{{ $subject->id }}" data-name="{{ $subject->name }}"
-                                   onchange="toggleUpdateButton('subjects', 'btn-register')">
-                        </td>
-                    @endcan
-                    <td>{{ $subject->id }}</td>
-                    <td>{{ $subject->name }}</td>
-                    <td>{{ $subject->description }}</td>
-                    @canany(['update_subject','destroy_subject'])
-                        <td>
-                            @can('update_subject')
-                                <a href="{{ route('subjects.edit', $subject->id) }}" class="btn btn-warning">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path
-                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                    </svg>
-                                </a>
-                            @endcan
-                            @can('destroy_subject')
-                                {!! Form::open([
-                                'method' => 'DELETE',
-                                'route' => ['subjects.destroy', $subject->id],
-                                'style' => 'display:inline;',
-                            ]) !!}
-                                {!! Form::button('<i class="bi bi-trash-fill"></i>', [
-                                    'type' => 'submit',
-                                    'class' => 'btn btn-danger',
-                                    'onclick' => !in_array($subject->id, $subjectsHasScores->toArray())
-                                        ? 'return confirm("' . __('Are you sure?') . '")'
-                                        : 'return false',
-                                    'disabled' => in_array($subject->id, $subjectsHasScores->toArray()) ? true : false,
-                                ]) !!}
-                                {!! Form::close() !!}
-                            @endcan
-                        </td>
-                    @endcanany
-                    @can('self_register_subject')
-                        <td>
-                            @if (!in_array($subject->id, $unregistedSubject))
-                                {!! Form::open([
-                                    'route' => ['students.store-register-subject', auth()->user()->student->id],
-                                    'style' => 'display:inline;',
-                                ]) !!}
-                                {!! Form::hidden('subject_id', $subject->id) !!}
-                                {!! Form::button('<i class="bi bi-plus"></i>', [
-                                    'title' => __('Register'),
-                                    'type' => 'submit',
-                                    'class' => 'btn btn-primary',
-                                    'onclick' => 'return confirm("' . __('Are you sure?') . '")',
-                                ]) !!}
-                                {!! Form::close() !!}
-                            @else
-                                {!! Form::button('<i class="bi bi-check-lg"></i>', [
-                                    'type' => 'button',
-                                    'class' => 'btn btn-secondary',
-                                    'disabled' => true,
-                                ]) !!}
-                            @endif
+                @foreach ($subjects as $subject)
+                    <tr>
+                        @can('self_register_subject')
+                            <td class="col-1">
+                                <input type="checkbox" name="subjects[]" class="subjects"
+                                    {{ in_array($subject->id, $unregistedSubject) ? 'disabled' : '' }}
+                                    data-id="{{ $subject->id }}" data-name="{{ $subject->name }}"
+                                    onchange="toggleUpdateButton('subjects', 'btn-register')">
+                            </td>
+                        @endcan
+                        <td>{{ $subject->id }}</td>
+                        <td>{{ $subject->name }}</td>
+                        <td>{{ $subject->description }}</td>
+                        @canany(['update_subject', 'destroy_subject'])
+                            <td>
+                                @can('update_subject')
+                                    <a href="{{ route('subjects.edit', $subject->id) }}" class="btn btn-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg>
+                                    </a>
+                                @endcan
+                                @can('destroy_subject')
+                                    {!! Form::open([
+                                        'method' => 'DELETE',
+                                        'route' => ['subjects.destroy', $subject->id],
+                                        'style' => 'display:inline;',
+                                    ]) !!}
+                                    {!! Form::button('<i class="bi bi-trash-fill"></i>', [
+                                        'type' => 'submit',
+                                        'class' => 'btn btn-danger',
+                                        'onclick' => !in_array($subject->id, $subjectsHasScores->toArray())
+                                            ? 'return confirm("' . __('Are you sure?') . '")'
+                                            : 'return false',
+                                        'disabled' => in_array($subject->id, $subjectsHasScores->toArray()) ? true : false,
+                                    ]) !!}
+                                    {!! Form::close() !!}
+                                @endcan
+                            </td>
+                        @endcanany
+                        @can('self_register_subject')
+                            <td>
+                                @if (!in_array($subject->id, $unregistedSubject))
+                                    {!! Form::open([
+                                        'route' => ['students.store-register-subject', auth()->user()->student->id],
+                                        'style' => 'display:inline;',
+                                    ]) !!}
+                                    {!! Form::hidden('subject_id', $subject->id) !!}
+                                    {!! Form::button('<i class="bi bi-plus"></i>', [
+                                        'title' => __('Register'),
+                                        'type' => 'submit',
+                                        'class' => 'btn btn-primary',
+                                        'onclick' => 'return confirm("' . __('Are you sure?') . '")',
+                                    ]) !!}
+                                    {!! Form::close() !!}
+                                @else
+                                    {!! Form::button('<i class="bi bi-check-lg"></i>', [
+                                        'type' => 'button',
+                                        'class' => 'btn btn-secondary',
+                                        'disabled' => true,
+                                    ]) !!}
+                                @endif
 
-                        </td>
-                    @endcan
-                </tr>
-            @endforeach
+                            </td>
+                        @endcan
+                    </tr>
+                @endforeach
             </tbody>
         </table>
         <div class="col-12 mt-2">
-            {{ $subjects->links() }}
+            {{ $subjects->appends(request()->all())->links() }}
         </div>
     </div>
     @can('self_register_subject')
         <div class="modal fade" id="registerSubjectModal" tabindex="-1" aria-labelledby="registerSubjectModal"
-             aria-hidden="true">
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -141,7 +141,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="registerSubjectForm" method="POST"
-                              action="{{ route('students.store-register-subject', auth()->user()->student->id) }}">
+                            action="{{ route('students.store-register-subject', auth()->user()->student->id) }}">
                             @csrf
                             <div class="row" id="subjectsContainer"></div>
                             <button type="submit" class="btn btn-primary">{{ __('Confirm') }}</button>

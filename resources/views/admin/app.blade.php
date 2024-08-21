@@ -75,10 +75,10 @@
                                                     </div>
                                                     <div class="flex-grow-1">
                                                         <span class="fw-semibold d-block">
-                                                            {{ @Auth::user()->name }}
+                                                            {{ Auth::user()->name }}
                                                         </span>
                                                         <small class="text-muted">
-                                                            {{ @Auth::user()->email }}
+                                                            {{ Auth::user()->email }}
                                                         </small>
                                                     </div>
                                                 </div>
@@ -137,6 +137,7 @@
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     @include('admin.inc.scripts')
+    @yield('scripts')
     @include('admin.inc.notification')
 </body>
 
