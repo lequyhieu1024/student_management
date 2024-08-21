@@ -13,13 +13,13 @@ class StudentsExport implements FromCollection, WithHeadings
     public function collection()
     {
         return collect([
-            ['ST001', 1, 85],
-            ['ST001', 2, 90],
-            ['ST001', 3, 78],
-            ['ST002', 1, 88],
-            ['ST002', 3, 84],
-            ['ST003', 2, 76],
-            ['ST003', 4, 82],
+            ['202323', 1, 85],
+            ['202323', 2, 90],
+            ['202323', 3, 78],
+            ['202333', 1, 88],
+            ['202333', 3, 84],
+            ['202411', 2, 76],
+            ['202411', 4, 82],
         ]);
     }
 

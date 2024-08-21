@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use App\Repositories\StudentRepository;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use App\Repositories\StudentRepository;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -33,33 +32,20 @@ class ProfileController extends Controller
      */
     public function updateAvatar(ProfileUpdateRequest $request)
     {
-        $data['avatar'] = upload_image($request->file('avatar'));
-        $user = $this->userRepository->show(Auth::user()->id);
-        $student = $this->studentRepository->update($data, $user->student->id);
-        if (!$student) {
-            return redirect()->back()->with('error', __('Update Failed'));
+        try {
+            DB::beginTransaction();
+            $data['avatar'] = upload_image($request->file('avatar'));
+            $user = $this->userRepository->show(Auth::user()->id);
+            $this->studentRepository->findOrFail($user->student->id)->avatar ? unlink($this->studentRepository->findOrFail($user->student->id)->avatar) : '';
+            $student = $this->studentRepository->update($data, $user->student->id);
+            DB::commit();
+            if (!$student) {
+                return redirect()->back()->with('error', __('Update Failed'));
+            }
+            return redirect()->back()->with('success', __('Updated Successfully'));
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
         }
-        return redirect()->back()->with('success', __('Updated Successfully'));
     }
-
-    /**
-     * Delete the user's account.
-     */
-//    public function destroy(Request $request)
-//    {
-//        $request->validateWithBag('userDeletion', [
-//            'password' => ['required', 'current_password'],
-//        ]);
-//
-//        $user = $request->user();
-//
-//        Auth::logout();
-//
-//        $user->delete();
-//
-//        $request->session()->invalidate();
-//        $request->session()->regenerateToken();
-//
-//        return Redirect::to('/');
-//    }
 }

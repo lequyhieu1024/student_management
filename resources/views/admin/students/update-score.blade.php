@@ -10,16 +10,15 @@
             <div class="modal-body">
                 <div class="row pb-4 text-align-center">
                     <div class="col-md-12 mb-2 mt-2">
-                        {!! Form::open(['route' => ['students.update-scores'], 'method' => 'POST']) !!}
+                        {!! Form::open(['route' => ['students.update-scores', $studentId], 'method' => 'PUT']) !!}
                         <div class="row">
                             <div class="col-md-4"> {{ __('Score') }} :</div>
                             <div class="col-md-8 d-flex gap-2">
-                                {!! Form::text('scores[' . $subjectId . ']', $score, [
+                                {!! Form::text('scores[' . $subjectId . '][score]', $score, [
                                     'class' => 'form-control score-value',
                                     'required',
                                     'id' => 'scoreInput',
                                 ]) !!}
-                                {!! Form::hidden('student_id', $studentId) !!}
                                 {!! Form::button('<i class="bi bi-check2-circle"></i>', [
                                     'class' => 'btn btn-primary update-score-btn',
                                     'type' => 'submit',

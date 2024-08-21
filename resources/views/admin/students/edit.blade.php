@@ -18,7 +18,8 @@
                             ]) !!}
                             <div class="row">
                                 <div class="col-md-6">
-                                    <img class="w-75" src="/{{ $student->avatar }}" alt="">
+                                    <img class="w-75" style="max-height: 200px" src="/{{ $student->avatar }}"
+                                        alt="">
                                 </div>
                                 <div class="form-group col-md-6 mb-3">
                                     {!! Form::label('avatar', __('Change Avatar'), ['class' => 'mb-1']) !!}
@@ -102,5 +103,4 @@
         </div>
     </div>
     <script src="{{ asset('admin/js/update-ajax.js') }}"></script>
-
 @endcan

@@ -19,6 +19,7 @@ use App\Repositories\SubjectRepository;
 use App\Http\Requests\StudentFormRequest;
 use App\Repositories\DepartmentRepository;
 use App\Http\Requests\RegisterSubjectFormRequest;
+use App\Http\Requests\ScoreFormRequest;
 
 class StudentController extends Controller
 {
@@ -50,6 +51,7 @@ class StudentController extends Controller
 
     public function index(Request $request)
     {
+        // dd($request->all());
         $students = $this->studentRepository->filter($request->all());
         return view('admin.students.index', compact('students'));
     }
@@ -74,7 +76,6 @@ class StudentController extends Controller
             if ($request->hasFile('avatar')) {
                 $data['avatar'] = upload_image($request->file('avatar'));
             }
-            dd($this->roleRepository->findOrFail(16)->name);
             $user = $this->userRepository->create($data)->assignRole($this->roleRepository->findOrFail(16)->name);
             $data['user_id'] = $user->id;
             $data['student_code'] = date('Y') . $user->id;
@@ -145,11 +146,11 @@ class StudentController extends Controller
         try {
             DB::beginTransaction();
             $student = $this->studentRepository->show($id);
-            unlink($student->avatar);
+            $student->avatar ? unlink($student->avatar) : '';
             $student->delete($id);
             // $student->user->delete();
             DB::commit();
-            return redirect()->route('students.index')->with('success', __('Delete Student Successfully'));
+            return redirect()->back()->with('success', __('Delete Student Successfully'));
         } catch (Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -158,8 +159,9 @@ class StudentController extends Controller
 
     public function getSubjects($id)
     {
+        $subjects = $this->subjectRepository->all();
         $students = $this->studentRepository->show($id);
-        return view('admin.students.subjects-by-student', compact('students'));
+        return view('admin.students.subjects-by-student', compact('students', 'subjects'));
     }
 
     public function editScore($studentId, $subjectId)
@@ -167,16 +169,19 @@ class StudentController extends Controller
         $score = $this->studentRepository->getScoreByStudentSubjectId($studentId, $subjectId);
         return view('admin.students.update-score', compact('score', 'studentId', 'subjectId'));
     }
-    public function updateScores(Request $request)
+
+    public function updateScores(ScoreFormRequest $request, $studentId)
     {
-        $this->studentRepository->updateScore($request->student_id, $request->scores);
-        return redirect()->route('students.subject', $request->student_id)->with('success', __('Updated Successfully'));
+        $this->studentRepository->updateScore($studentId, $request->scores);
+        return redirect()->back()->with('success', __('Updated Successfully'));
     }
+
     public function registerSubject($id)
     {
         $subjects = $this->subjectRepository->getSubjectDoesntHasStudent($id);
         return view('admin.students.register-subject', compact('subjects', 'id'));
     }
+
     public function storeRegisterSubject(RegisterSubjectFormRequest $request, $id)
     {
         try {
@@ -202,10 +207,12 @@ class StudentController extends Controller
             throw $th;
         }
     }
+
     public function getTemplate()
     {
         return Excel::download(new StudentsExport, 'students_subjects_scores.xlsx');
     }
+
     public function import(ImportStudentExcelRequest $request)
     {
         $import = new StudentsImport();
@@ -217,12 +224,13 @@ class StudentController extends Controller
         }
         return response()->json(['success' => __('Import Successfully')]);
     }
+
     public function getListSubjectAjax()
     {
         $subjects = $this->subjectRepository->all();
         return response()->json([
             'success' => true,
-            'subject' => $subjects
+            'subjects' => $subjects
         ], 200);
     }
 }

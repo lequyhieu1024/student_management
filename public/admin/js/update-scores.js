@@ -1,81 +1,160 @@
-
-
-function viewModal2() {
-    let listSubject = [];
-    $(document).ready(function(){
-        let subjectUrl =  BASE_URL+'/admin/list-subject-ajax';
-        $.ajax({
-            url: subjectUrl,
+async function listSubjects() {
+    try {
+        const response = await $.ajax({
+            url: `${BASE_URL}/admin/list-subject-ajax`,
             type: 'GET',
-            success: function (response) {
-                if (response.success) {
-                    listSubject = response.data;
+        });
 
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-                console.log('An error occurred. Please try again.');
-            }
-        })
-    });
-    console.log(listSubject);
-
-
-    //
-    const checkboxes = document.querySelectorAll('.student_subject:checked');
-    const subjectsContainer = document.getElementById('subjectsContainer');
-
-    subjectsContainer.innerHTML = '';
-
-    checkboxes.forEach(checkbox => {
-        const subjectId = checkbox.getAttribute('data-subject-id');
-        const subjectName = checkbox.getAttribute('data-subject-name');
-        const score = checkbox.getAttribute('data-score');
-        const inputHtml = `
-        <div class="mb-3">
-            <label for="score-${subjectId}" class="form-label">${subjectName}</label>
-            <select name="" id="">
-                <option value="1"></option>
-
-</select>
-            <input type="text" class="form-control" id="score-${subjectId}" name="scores[${subjectId}]" value="${score}"/>
-            <span class="text-danger" id="error-${subjectId}"></span>
-        </div>`
-    ;
-        subjectsContainer.insertAdjacentHTML('beforeend', inputHtml);
-    });
-
-    var myModal = new bootstrap.Modal(document.getElementById('updateScoreModal'), {});
-    myModal.show();
-}
-
-function validator() {
-    const form = document.getElementById('updateScoreForm');
-    const inputs = form.querySelectorAll('input[name^="scores"]');
-    let isValid = true;
-
-    inputs.forEach(input => {
-        const value = input.value.trim();
-        const subjectId = input.id.split('-')[1];
-        const errorSpan = document.getElementById(`error-${subjectId}`);
-
-        errorSpan.textContent = '';
-
-        if (!value) {
-            isValid = false;
-            errorSpan.textContent = 'Không được bỏ trống.';
-            input.classList.add('is-invalid');
-        } else if (isNaN(value) || Number(value) <= 0 || Number(value) > 10) {
-            isValid = false;
-            errorSpan.textContent = 'Điểm phải là số từ 0 đến 10.';
-            input.classList.add('is-invalid');
+        if (response.success) {
+            return response.subjects;
         } else {
-            input.classList.remove('is-invalid');
+            alert(response.message);
+            throw new Error(response.message);
         }
+    } catch (error) {
+        console.error('Error:', error.message);
+        throw new Error('An error occurred.');
+    }
+}
+
+$(document).ready(async function() {
+    const $subjectsContainer = $('#subjectsContainer');
+    const subjects = await listSubjects();
+    let selectedSubjectIds = [];
+
+    if (window.old_html) {
+        selectedSubjectIds = Object.keys(window.old_html);
+    }
+
+    function hideBtn() {
+        if ($('#subjectsContainer').find('select').length >= subjects.length) {
+            $('#addBtn').addClass('d-none');
+        } else {
+            $('#addBtn').removeClass('d-none');
+        }
+        
+        if ($('#subjectsContainer').find('select').length <= 0) {
+            $('#btn-submit').addClass('d-none');
+        } else {
+            $('#btn-submit').removeClass('d-none');
+        }
+    }
+
+    function getSelectedValues() {
+        const selectedValues = [];
+        $('select').each((_, select) => {
+            const value = $(select).val();
+            if (value) {
+                selectedValues.push(value);
+            }
+        });
+        return Array.from(new Set(selectedValues));
+    }
+    
+
+    function updateOptionHtml(currentValue) {
+        const selectedValues = getSelectedValues();
+        let optionsHtml = '<option value="">Chọn 1 môn học</option>';
+        subjects.forEach(subject => {
+            if (!selectedValues.includes(String(subject.id)) || subject.id === parseInt(currentValue)) {
+                optionsHtml += `<option value="${subject.id}">${subject.name}</option>`;
+            }
+        });
+        return optionsHtml;
+    }
+    
+
+    function updateAllSelectOptions() {
+        $('select').each((_, select) => {
+            const $select = $(select);
+            const currentValue = $select.val();
+            const newOptionsHtml = updateOptionHtml(currentValue);
+            $select.html(newOptionsHtml);
+            if (currentValue) {
+                $select.val(currentValue);
+            }
+        });
+    }
+    
+
+    function addSelectForm() {
+        const inputHtml = `
+            <div class="d-flex justify-content-center subjects gap-2 p-2">
+                <div class="col-8">
+                    <select name="subject[]" class="form-control">
+                        ${updateOptionHtml('')}
+                    </select>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="col-3">
+                    <input type="text" class="form-control"/>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="col-1">
+                    <a class="removeBtn text-white btn btn-danger">x</a>
+                </div>
+            </div>
+        `;
+    
+        const $div = $(inputHtml);
+        $subjectsContainer.append($div);
+    
+        const $selectElement = $div.find('select');
+        const $removeBtn = $div.find('.removeBtn');
+        
+        $removeBtn.off('click').on('click', function () {
+            $div.remove();
+            selectedSubjectIds = selectedSubjectIds.filter(subjectId => subjectId !== $selectElement.val());
+            updateAllSelectOptions();
+            hideBtn();
+        });
+        
+        $selectElement.off('change').on('change', function () {
+            const selectedId = $(this).val();
+            const $textInput = $div.find('input[type="text"]');
+            $textInput.attr({
+                name: `scores[${selectedId}][score]`,
+                id: `score-${selectedId}`
+            });
+    
+            const score = $(`#get-score-${selectedId}`).val() || '';
+            $textInput.val(score);
+            selectedSubjectIds = getSelectedValues();
+            updateAllSelectOptions();
+            hideBtn();
+        });
+    }
+    
+
+    $subjectsContainer.on('click', '.removeBtn', function () {
+        $(this).closest('.old_html').remove();
+        selectedSubjectIds = selectedSubjectIds.filter(subjectId => subjectId !== $(this).closest('.subjects').find('select').val());
+        updateAllSelectOptions();
+        hideBtn();
     });
 
-    return isValid;
-}
+    $('.old_html select').off('change').on('change', function () {
+        const selectedId = $(this).val();
+        const $parentDiv = $(this).closest('.old_html');
+        const $textInput = $parentDiv.find('input[type="text"]');
+
+        $textInput.attr({
+            name: `scores[${selectedId}][score]`,
+            id: `score-${selectedId}`
+        });
+
+        const score = $(`#get-score-${selectedId}`).val() || '';
+        $textInput.val(score);
+        selectedSubjectIds = getSelectedValues();
+        updateAllSelectOptions();
+        hideBtn();
+    });
+    
+    $('#addBtn').off('click').on('click', () => {
+        addSelectForm();
+        hideBtn();
+    });
+    
+    updateAllSelectOptions();
+    hideBtn();
+});
