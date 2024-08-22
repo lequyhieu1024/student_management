@@ -14,9 +14,9 @@ class RoleController extends Controller
     public function __construct(RoleRepository $roleRepository)
     {
         $this->middleware('permission:list_role')->only(['index']);
-        $this->middleware('permission:create_role')->only(['create','store']);
+        $this->middleware('permission:create_role')->only(['create', 'store']);
         $this->middleware('permission:show_role')->only(['show']);
-        $this->middleware('permission:update_role')->only(['edit','update']);
+        $this->middleware('permission:update_role')->only(['edit', 'update']);
         $this->middleware('permission:destroy_role')->only(['destroy']);
         $this->roleRepository = $roleRepository;
     }
@@ -95,8 +95,8 @@ class RoleController extends Controller
     {
         $role = $this->roleRepository->deleteRole($id);
         if (!$role) {
-            return redirect()->route('roles.index')->with('error', __('Can not delete'));
+            return redirect()->back()->with('error', __('Can not delete'));
         }
-        return redirect()->route('roles.index')->with('success', __('Deleted Successfully'));
+        return redirect()->back()->with('success', __('Deleted Successfully'));
     }
 }

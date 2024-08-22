@@ -122,7 +122,12 @@ class StudentController extends Controller
             } else {
                 $data['avatar'] = $this->studentRepository->findOrFail($id)->avatar;
             }
-            $this->userRepository->updateUser($data, $this->studentRepository->show($id)->user_id);
+
+            $user = $this->userRepository->findOrFail($this->studentRepository->show($id)->user_id);
+            !empty($data['password']) ? $data['password'] : $user->password;
+
+            $this->userRepository->update($data, $this->studentRepository->show($id)->user_id);
+
             $this->studentRepository->updateStudent($data, $id);
             DB::commit();
             return response()->json([
@@ -159,7 +164,7 @@ class StudentController extends Controller
 
     public function getSubjects($id)
     {
-        $subjects = $this->subjectRepository->all();
+        $subjects = $this->subjectRepository->getAllNotPaginate();
         $students = $this->studentRepository->show($id);
         return view('admin.students.subjects-by-student', compact('students', 'subjects'));
     }
@@ -227,7 +232,7 @@ class StudentController extends Controller
 
     public function getListSubjectAjax()
     {
-        $subjects = $this->subjectRepository->all();
+        $subjects = $this->subjectRepository->getAllNotPaginate();
         return response()->json([
             'success' => true,
             'subjects' => $subjects
