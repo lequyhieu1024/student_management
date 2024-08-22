@@ -22,7 +22,8 @@ abstract class BaseRepository implements RepositoryInterface
         return $this->model->paginate($data['size'] ?? 10);
     }
 
-    public function all(){
+    public function getAllNotPaginate()
+    {
         return $this->model->all();
     }
 

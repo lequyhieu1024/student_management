@@ -14,9 +14,9 @@ class DepartmentController extends Controller
     public function __construct(DepartmentRepository $departmentRepository)
     {
         $this->middleware('permission:list_department')->only(['index']);
-        $this->middleware('permission:create_department')->only(['create','store']);
+        $this->middleware('permission:create_department')->only(['create', 'store']);
         $this->middleware('permission:show_department')->only(['show']);
-        $this->middleware('permission:update_department')->only(['edit','update']);
+        $this->middleware('permission:update_department')->only(['edit', 'update']);
         $this->middleware('permission:destroy_departments')->only(['destroy']);
         $this->departmentRepository = $departmentRepository;
     }
@@ -48,8 +48,7 @@ class DepartmentController extends Controller
     }
     public function destroy($id)
     {
-        // dd(1);
         $this->departmentRepository->delete($id);
-        return redirect()->route('departments.index')->with('success', __('Deleted Successfully'));
+        return redirect()->back()->with('success', __('Deleted Successfully'));
     }
 }
