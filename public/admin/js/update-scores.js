@@ -1,7 +1,7 @@
 async function listSubjects() {
     try {
         const response = await $.ajax({
-            url: `${BASE_URL}/admin/list-subject-ajax`,
+            url: `/admin/list-subject-ajax`,
             type: 'GET',
         });
 

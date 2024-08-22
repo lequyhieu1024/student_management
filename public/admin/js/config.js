@@ -25,4 +25,3 @@ let config = {
     borderColor: '#eceef1'
   }
 };
-const BASE_URL = 'http://127.0.0.1:8000';

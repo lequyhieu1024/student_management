@@ -34,7 +34,7 @@ class StudentFormRequest extends FormRequest
             'birthday' => 'required|before:today|after_or_equal:1900-01-01',
             'address' => 'required|max:255',
             'department_id' => 'required|exists:departments,id',
-            'password' => request()->isMethod('put') ? 'nullable|min:8' : 'required|nullable|min:8'
+            'password' => request()->isMethod('put') ? 'nullable|min:8' : 'required|min:8'
         ];
         if (!request()->isMethod('PUT')) {
             $rules['email'] = 'required|email|unique:users,email';

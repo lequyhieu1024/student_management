@@ -20,8 +20,8 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
      */
     public function collection(Collection $rows)
     {
-        $studentIds = $rows->pluck('ma_sinh_vien')->toArray();
-        $students = Student::whereIn('student_code', $studentIds)->with('subjects')->get();
+        $studentCodes = $rows->pluck('ma_sinh_vien')->toArray();
+        $students = Student::whereIn('student_code', $studentCodes)->with('subjects')->get();
         foreach ($rows as $row) {
             if (empty($row['ma_sinh_vien']) || empty($row['id_mon_hoc'])) {
                 $this->errors[] = "Student code or Subject ID is missing.";
@@ -29,6 +29,7 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
             }
 
             $student = $students->firstWhere('student_code', $row['ma_sinh_vien']);
+
             if (!$student) {
                 $this->errors[] = "Student with code {$row['ma_sinh_vien']} not found.";
                 return;

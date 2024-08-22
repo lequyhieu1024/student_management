@@ -15,9 +15,9 @@ class SubjectController extends Controller
     public function __construct(SubjectRepository $subjectReposittory, StudentRepository $studentReposittory)
     {
         $this->middleware('permission:list_subject')->only(['index']);
-        $this->middleware('permission:create_subject')->only(['create','store']);
+        $this->middleware('permission:create_subject')->only(['create', 'store']);
         $this->middleware('permission:show_subject')->only(['show']);
-        $this->middleware('permission:update_subject')->only(['edit','update']);
+        $this->middleware('permission:update_subject')->only(['edit', 'update']);
         $this->middleware('permission:destroy_subject')->only(['destroy']);
         $this->subjectReposittory = $subjectReposittory;
         $this->studentReposittory = $studentReposittory;
@@ -81,9 +81,9 @@ class SubjectController extends Controller
         $hasScores = $this->subjectReposittory->getSubjectHasScore($id);
         if (!$hasScores) {
             $this->subjectReposittory->deleteSubject($id);
-            return redirect()->route('subjects.index')->with('success', __('Deleted Successfully'));
+            return redirect()->back()->with('success', __('Deleted Successfully'));
         } else {
-            return redirect()->route('subjects.index')->with('error', __('Can not delete because subject has scores'));
+            return redirect()->back()->with('error', __('Can not delete because subject has scores'));
         }
     }
 }
