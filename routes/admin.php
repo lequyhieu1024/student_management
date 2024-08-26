@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentController;
@@ -44,3 +45,9 @@ Route::resource('departments', DepartmentController::class);
 Route::resource('subjects', SubjectController::class);
 
 Route::resource('roles', RoleController::class);
+
+Route::get('/chat', [ChatController::class, 'index'])->name('chat');
+
+Route::post('send-message', [ChatController::class, 'sendMessage'])->name('send.message');
+
+Route::get('get-message', [ChatController::class, 'getMessage'])->name('get.message');
