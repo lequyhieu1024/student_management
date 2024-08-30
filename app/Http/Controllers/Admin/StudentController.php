@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\StudentsExport;
-use App\Models\Student;
 use App\Repositories\RoleRepository;
 use Exception;
 use App\Jobs\SendEmailJob;

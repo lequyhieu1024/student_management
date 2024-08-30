@@ -6,7 +6,7 @@ INSERT INTO users(name, email,password) VALUES ('Lê Hiếu', 'lqh@gmail.com','1
 SET @user_id = LAST_INSERT_ID();
 
 INSERT INTO students (user_id, student_code, phone, gender, birthday, address, department_id)
-SELECT @user_id, CONCAT(YEAR(NOW()), @user_id), '0123456789', 1, DATE_SUB(CURDATE(), INTERVAL 50 YEAR), '68 cầu giấy', id 
+SELECT @user_id, CONCAT(YEAR(NOW()), @user_id), '0123456789', 1, DATE_SUB(CURDATE(), INTERVAL 50 YEAR), '68 cầu giấy', id
 FROM departments
 WHERE name = 'Khoa CNTT';
 
@@ -24,20 +24,15 @@ UPDATE student_subject
 SET score = 10
 WHERE student_id IN (
     SELECT student_id
-    FROM (
-        SELECT student_id, AVG(score) AS avg_score
-        FROM student_subject
-        GROUP BY student_id
-        HAVING COUNT(*) = COUNT(score) 
-    ) AS avg_scores
-    WHERE avg_score = (
+    FROM student_subject
+    GROUP BY student_id
+    HAVING AVG(score) = (
         SELECT MIN(avg_score)
         FROM (
-            SELECT student_id, AVG(score) AS avg_score
-            FROM student_subject
-            GROUP BY student_id
-            HAVING COUNT(*) = COUNT(score) 
-        ) AS sub_avg_scores
+                 SELECT student_id, AVG(score) AS avg_score
+                 FROM student_subject
+                 GROUP BY student_id
+             ) AS avg_scores
     )
 );
 

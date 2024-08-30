@@ -17,7 +17,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     @include('admin.inc.style')
     @yield('styles')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
