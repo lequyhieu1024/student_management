@@ -60,7 +60,7 @@ class StudentRepository extends BaseRepository
                 }
             }
             if (!empty($conditions)) {
-                $query->whereRaw(implode(' OR ', $conditions));
+                $query->whereRaw('(' . implode(' OR ', $conditions) . ')');
             }
         }
 
@@ -100,7 +100,7 @@ class StudentRepository extends BaseRepository
     public function updateScore($studentId, $scores)
     {
         $student = $this->findOrFail($studentId);
-        $student->subjects()->syncWithoutDetaching($scores);
+        $student->subjects()->sync($scores);
     }
 
     public function registerSubject($studentId, $subjectId)

@@ -3,10 +3,10 @@
     <link rel="stylesheet" href="/admin/css/chat.css">
 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel='stylesheet prefetch'
         href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 @endsection
 @section('content')
     <div id="frame">
@@ -84,7 +84,6 @@
     <script>
         function sendMessage() {
             const message = document.getElementById('message').value;
-
             axios.post('/admin/send-message', {
                 message: message
             }, {
@@ -96,5 +95,4 @@
         }
     </script>
     <script src="/admin/js/chat.js"></script>
-    @vite('resources/js/app.js')
 @endsection

@@ -28,9 +28,9 @@ Route::get('students/{student}/subject', [StudentController::class, 'getSubjects
 
 Route::get('students/{student}/{subject}/edit-score', [StudentController::class, 'editScore'])->name('students.edit-score');
 
-Route::get('register-subject/{student}', [StudentController::class, 'registerSubject'])->name('students.register-subject');
+Route::get('students/{student}/register-subject', [StudentController::class, 'registerSubject'])->name('students.register-subject');
 
-Route::post('register-subject/{student}', [StudentController::class, 'storeRegisterSubject'])->name('students.store-register-subject');
+Route::post('students/{student}/register-subject', [StudentController::class, 'storeRegisterSubject'])->name('students.store-register-subject');
 
 Route::put('students/{student}/update-scores', [StudentController::class, 'updateScores'])->name('students.update-scores');
 
@@ -46,7 +46,7 @@ Route::resource('subjects', SubjectController::class);
 
 Route::resource('roles', RoleController::class);
 
-Route::get('/chat', [ChatController::class, 'index'])->name('chat');
+Route::get('chat', [ChatController::class, 'index'])->name('chat');
 
 Route::post('send-message', [ChatController::class, 'sendMessage'])->name('send.message');
 
