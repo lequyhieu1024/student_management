@@ -107,18 +107,18 @@
                                         <input type="text" disabled name="score" id="get-score-{{ $subject->id }}"
                                             class="form-control pr-5"
                                             value="{{ $subject->pivot->score !== null ? $subject->pivot->score : 'Chưa có điểm' }}" />
-                                        @can('update_score')
-                                            <button type="button"
-                                                onclick="viewModal(`{{ route('students.edit-score', [$students->id, $subject->id]) }}`)"
-                                                class="btn btn-outline-warning position-absolute"
-                                                style="top: 0; right: 0; height: 100%;">
-                                                @if ($subject->pivot->score)
-                                                    <i class="bi bi-pen"></i>
-                                                @else
-                                                    <i class="bi bi-plus"></i>
-                                                @endif
-                                            </button>
-                                        @endcan
+{{--                                        @can('update_score')--}}
+{{--                                            <button type="button"--}}
+{{--                                                onclick="viewModal(`{{ route('students.edit-score', [$students->id, $subject->id]) }}`)"--}}
+{{--                                                class="btn btn-outline-warning position-absolute"--}}
+{{--                                                style="top: 0; right: 0; height: 100%;">--}}
+{{--                                                @if ($subject->pivot->score)--}}
+{{--                                                    <i class="bi bi-pen"></i>--}}
+{{--                                                @else--}}
+{{--                                                    <i class="bi bi-plus"></i>--}}
+{{--                                                @endif--}}
+{{--                                            </button>--}}
+{{--                                        @endcan--}}
                                     </div>
                                 </td>
                             </tr>
