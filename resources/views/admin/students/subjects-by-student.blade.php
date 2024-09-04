@@ -52,7 +52,7 @@
                                     $old_html = session('old_html');
                                 @endphp
                                 @foreach ($old_html as $subjectId => $score)
-                                    <div class="d-flex justify-content-center subjects gap-2 p-2">
+                                    <div class="d-flex old_html justify-content-center subjects gap-2 p-2">
                                         <div class="col-8">
                                             <select name="subject[]" class="form-control">
                                                 <option value="">Chọn 1 môn học</option>
@@ -70,7 +70,7 @@
                                         <div class="col-3">
                                             <input type="text" class="form-control"
                                                    name="scores[{{ $subjectId }}][score]"
-                                                   value="{{ is_array($score) ? implode(', ', $score) : $score }}" />
+                                                   value="{{ is_array($score) ? implode(', ', $score) : $score }}"/>
                                             @error('scores.' . $subjectId . '.score')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -97,7 +97,7 @@
                                         <div class="col-3">
                                             <input type="text" class="form-control"
                                                    name="scores[{{ $subject->id }}][score]"
-                                                   value="{{ $subject->pivot->score !== null ? $subject->pivot->score : '' }}" />
+                                                   value="{{ $subject->pivot->score !== null ? $subject->pivot->score : '' }}"/>
                                         </div>
                                         <div class="col-1">
                                             <a class="removeBtn text-white btn btn-danger">x</a>
@@ -105,11 +105,16 @@
                                     </div>
                                 @endforeach
                             @endif
+                            @foreach ($students->subjects as $subject)
+                                <input type="hidden" id="get-score-{{$subject->id}}"
+                                       value="{{ $subject->pivot->score !== null ? $subject->pivot->score : '' }}"/>
+                            @endforeach
                         </div>
                         <button type="submit" id="btn-submit"
                                 class="btn btn-primary d-none mt-2">{{ __('Update Score') }}</button>
                         @can('update_score')
-                            <button type="button" class="btn btn-success mt-2" id="addBtn">+ {{ __('Add Score Subject') }}
+                            <button type="button" class="btn btn-success mt-2" id="addBtn">
+                                + {{ __('Add Score Subject') }}
                             </button>
                         @endcan
                     </form>
