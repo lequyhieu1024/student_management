@@ -32,7 +32,7 @@ $(document).ready(async function() {
         } else {
             $('#addBtn').removeClass('d-none');
         }
-        
+
         if ($('#subjectsContainer').find('select').length <= 0) {
             $('#btn-submit').addClass('d-none');
         } else {
@@ -50,7 +50,7 @@ $(document).ready(async function() {
         });
         return Array.from(new Set(selectedValues));
     }
-    
+
 
     function updateOptionHtml(currentValue) {
         const selectedValues = getSelectedValues();
@@ -62,7 +62,7 @@ $(document).ready(async function() {
         });
         return optionsHtml;
     }
-    
+
 
     function updateAllSelectOptions() {
         $('select').each((_, select) => {
@@ -75,7 +75,7 @@ $(document).ready(async function() {
             }
         });
     }
-    
+
 
     function addSelectForm() {
         const inputHtml = `
@@ -95,20 +95,20 @@ $(document).ready(async function() {
                 </div>
             </div>
         `;
-    
+
         const $div = $(inputHtml);
         $subjectsContainer.append($div);
-    
+
         const $selectElement = $div.find('select');
         const $removeBtn = $div.find('.removeBtn');
-        
+
         $removeBtn.off('click').on('click', function () {
             $div.remove();
             selectedSubjectIds = selectedSubjectIds.filter(subjectId => subjectId !== $selectElement.val());
             updateAllSelectOptions();
             hideBtn();
         });
-        
+
         $selectElement.off('change').on('change', function () {
             const selectedId = $(this).val();
             const $textInput = $div.find('input[type="text"]');
@@ -116,7 +116,7 @@ $(document).ready(async function() {
                 name: `scores[${selectedId}][score]`,
                 id: `score-${selectedId}`
             });
-    
+
             const score = $(`#get-score-${selectedId}`).val() || '';
             $textInput.val(score);
             selectedSubjectIds = getSelectedValues();
@@ -124,13 +124,22 @@ $(document).ready(async function() {
             hideBtn();
         });
     }
-    
+
 
     $subjectsContainer.on('click', '.removeBtn', function () {
         $(this).closest('.old_html').remove();
         selectedSubjectIds = selectedSubjectIds.filter(subjectId => subjectId !== $(this).closest('.subjects').find('select').val());
         updateAllSelectOptions();
         hideBtn();
+    });
+
+    $subjectsContainer.on('click', function (e) {
+        if (e.target.classList.contains('removeBtn')) {
+            e.target.closest('.d-flex').remove();
+            selectedSubjectIds = selectedSubjectIds.filter(subjectId => subjectId !== $(this).closest('.subjects').find('select').val());
+            updateAllSelectOptions();
+            hideBtn();
+        }
     });
 
     $('.old_html select').off('change').on('change', function () {
@@ -149,12 +158,12 @@ $(document).ready(async function() {
         updateAllSelectOptions();
         hideBtn();
     });
-    
+
     $('#addBtn').off('click').on('click', () => {
         addSelectForm();
         hideBtn();
     });
-    
+
     updateAllSelectOptions();
     hideBtn();
 });
