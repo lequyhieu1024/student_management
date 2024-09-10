@@ -1,0 +1,307 @@
+2024/09/05 03:06:04 [notice] 16#16: using the "epoll" event method
+2024/09/05 03:06:04 [notice] 16#16: nginx/1.25.2
+2024/09/05 03:06:04 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 03:06:04 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 03:06:04 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 03:06:04 [notice] 16#16: start worker processes
+2024/09/05 03:06:04 [notice] 16#16: start worker process 17
+2024/09/05 03:06:04 [notice] 16#16: start worker process 18
+2024/09/05 03:06:04 [notice] 16#16: start worker process 19
+2024/09/05 03:06:04 [notice] 16#16: start worker process 20
+2024/09/05 03:06:04 [notice] 16#16: start worker process 21
+2024/09/05 03:06:04 [notice] 16#16: start worker process 22
+2024/09/05 03:06:04 [notice] 16#16: start worker process 23
+2024/09/05 03:06:04 [notice] 16#16: start worker process 24
+2024/09/05 03:06:18 [crit] 18#18: *1 connect() to unix:/run/php/php7.4-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.65.1, server: miduner.local, request: "GET /phpmyadmin/ HTTP/1.1", upstream: "fastcgi://unix:/run/php/php7.4-fpm.sock:", host: "localhost"
+2024/09/05 03:06:19 [crit] 18#18: *1 connect() to unix:/run/php/php7.4-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.65.1, server: miduner.local, request: "GET /phpmyadmin/ HTTP/1.1", upstream: "fastcgi://unix:/run/php/php7.4-fpm.sock:", host: "localhost"
+2024/09/05 03:07:34 [crit] 20#20: *5 connect() to unix:/run/php/php7.4-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php7.4-fpm.sock:", host: "localhost"
+2024/09/05 03:12:45 [crit] 17#17: *8 connect() to unix:/run/php/php7.4-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php7.4-fpm.sock:", host: "localhost"
+2024/09/05 03:15:57 [notice] 16#16: using the "epoll" event method
+2024/09/05 03:15:57 [notice] 16#16: nginx/1.25.2
+2024/09/05 03:15:57 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 03:15:57 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 03:15:57 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 03:15:57 [notice] 16#16: start worker processes
+2024/09/05 03:15:57 [notice] 16#16: start worker process 17
+2024/09/05 03:15:57 [notice] 16#16: start worker process 18
+2024/09/05 03:15:57 [notice] 16#16: start worker process 19
+2024/09/05 03:15:57 [notice] 16#16: start worker process 20
+2024/09/05 03:15:57 [notice] 16#16: start worker process 21
+2024/09/05 03:15:57 [notice] 16#16: start worker process 22
+2024/09/05 03:15:57 [notice] 16#16: start worker process 23
+2024/09/05 03:15:57 [notice] 16#16: start worker process 24
+2024/09/05 03:18:34 [crit] 17#17: *1 connect() to unix:/run/php/php8.2-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 03:18:46 [crit] 17#17: *1 connect() to unix:/run/php/php8.2-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 03:19:07 [crit] 17#17: *1 connect() to unix:/run/php/php8.2-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 03:20:59 [notice] 16#16: using the "epoll" event method
+2024/09/05 03:20:59 [notice] 16#16: nginx/1.25.2
+2024/09/05 03:20:59 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 03:20:59 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 03:20:59 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 03:20:59 [notice] 16#16: start worker processes
+2024/09/05 03:20:59 [notice] 16#16: start worker process 17
+2024/09/05 03:20:59 [notice] 16#16: start worker process 18
+2024/09/05 03:20:59 [notice] 16#16: start worker process 19
+2024/09/05 03:20:59 [notice] 16#16: start worker process 20
+2024/09/05 03:20:59 [notice] 16#16: start worker process 21
+2024/09/05 03:20:59 [notice] 16#16: start worker process 22
+2024/09/05 03:20:59 [notice] 16#16: start worker process 23
+2024/09/05 03:20:59 [notice] 16#16: start worker process 24
+2024/09/05 03:21:28 [warn] 19#19: *5 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 03:45:17 [warn] 21#21: *10 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 03:46:26 [warn] 23#23: *14 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 03:52:08 [notice] 16#16: using the "epoll" event method
+2024/09/05 03:52:08 [notice] 16#16: nginx/1.25.2
+2024/09/05 03:52:08 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 03:52:08 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 03:52:08 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 03:52:08 [notice] 16#16: start worker processes
+2024/09/05 03:52:08 [notice] 16#16: start worker process 17
+2024/09/05 03:52:08 [notice] 16#16: start worker process 18
+2024/09/05 03:52:08 [notice] 16#16: start worker process 19
+2024/09/05 03:52:08 [notice] 16#16: start worker process 20
+2024/09/05 03:52:08 [notice] 16#16: start worker process 21
+2024/09/05 03:52:08 [notice] 16#16: start worker process 22
+2024/09/05 03:52:08 [notice] 16#16: start worker process 23
+2024/09/05 03:52:08 [notice] 16#16: start worker process 24
+2024/09/05 03:52:13 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /phpmyadmin/ HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 03:52:21 [warn] 18#18: *3 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 03:55:35 [notice] 16#16: using the "epoll" event method
+2024/09/05 03:55:35 [notice] 16#16: nginx/1.25.2
+2024/09/05 03:55:35 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 03:55:35 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 03:55:35 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 03:55:35 [notice] 16#16: start worker processes
+2024/09/05 03:55:35 [notice] 16#16: start worker process 17
+2024/09/05 03:55:35 [notice] 16#16: start worker process 18
+2024/09/05 03:55:35 [notice] 16#16: start worker process 19
+2024/09/05 03:55:35 [notice] 16#16: start worker process 20
+2024/09/05 03:55:35 [notice] 16#16: start worker process 21
+2024/09/05 03:55:35 [notice] 16#16: start worker process 22
+2024/09/05 03:55:35 [notice] 16#16: start worker process 23
+2024/09/05 03:55:35 [notice] 16#16: start worker process 24
+2024/09/05 03:55:40 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 03:55:51 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 03:57:52 [warn] 19#19: *6 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 03:59:26 [notice] 16#16: using the "epoll" event method
+2024/09/05 03:59:26 [notice] 16#16: nginx/1.25.2
+2024/09/05 03:59:26 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 03:59:26 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 03:59:26 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 03:59:26 [notice] 16#16: start worker processes
+2024/09/05 03:59:26 [notice] 16#16: start worker process 17
+2024/09/05 03:59:26 [notice] 16#16: start worker process 18
+2024/09/05 03:59:26 [notice] 16#16: start worker process 19
+2024/09/05 03:59:26 [notice] 16#16: start worker process 20
+2024/09/05 03:59:26 [notice] 16#16: start worker process 21
+2024/09/05 03:59:26 [notice] 16#16: start worker process 22
+2024/09/05 03:59:26 [notice] 16#16: start worker process 23
+2024/09/05 03:59:26 [notice] 16#16: start worker process 24
+2024/09/05 03:59:30 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:02:32 [warn] 20#20: *5 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:16:44 [notice] 16#16: using the "epoll" event method
+2024/09/05 04:16:44 [notice] 16#16: nginx/1.25.2
+2024/09/05 04:16:44 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 04:16:44 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 04:16:44 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 04:16:44 [notice] 16#16: start worker processes
+2024/09/05 04:16:44 [notice] 16#16: start worker process 17
+2024/09/05 04:16:44 [notice] 16#16: start worker process 18
+2024/09/05 04:16:44 [notice] 16#16: start worker process 19
+2024/09/05 04:16:44 [notice] 16#16: start worker process 20
+2024/09/05 04:16:44 [notice] 16#16: start worker process 21
+2024/09/05 04:16:44 [notice] 16#16: start worker process 22
+2024/09/05 04:16:44 [notice] 16#16: start worker process 23
+2024/09/05 04:16:44 [notice] 16#16: start worker process 24
+2024/09/05 04:18:22 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:20:04 [notice] 16#16: using the "epoll" event method
+2024/09/05 04:20:04 [notice] 16#16: nginx/1.25.2
+2024/09/05 04:20:04 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 04:20:04 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 04:20:04 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 04:20:04 [notice] 16#16: start worker processes
+2024/09/05 04:20:04 [notice] 16#16: start worker process 17
+2024/09/05 04:20:04 [notice] 16#16: start worker process 18
+2024/09/05 04:20:04 [notice] 16#16: start worker process 19
+2024/09/05 04:20:04 [notice] 16#16: start worker process 20
+2024/09/05 04:20:04 [notice] 16#16: start worker process 21
+2024/09/05 04:20:04 [notice] 16#16: start worker process 22
+2024/09/05 04:20:04 [notice] 16#16: start worker process 23
+2024/09/05 04:20:04 [notice] 16#16: start worker process 24
+2024/09/05 04:20:16 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:20:30 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:20:33 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:21:11 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/4/00/0000000004 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:21:44 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/5/00/0000000005 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 04:22:09 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/6/00/0000000006 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /dashboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/register"
+2024/09/05 04:35:16 [warn] 21#21: *29 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/7/00/0000000007 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /dashboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/dashboard"
+2024/09/05 04:35:20 [warn] 21#21: *29 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/8/00/0000000008 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /dashboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/dashboard"
+2024/09/05 04:36:23 [warn] 21#21: *29 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/9/00/0000000009 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /register HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 04:36:30 [warn] 21#21: *29 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/0/01/0000000010 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 04:39:07 [notice] 16#16: using the "epoll" event method
+2024/09/05 04:39:07 [notice] 16#16: nginx/1.25.2
+2024/09/05 04:39:07 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 04:39:07 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 04:39:07 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 04:39:07 [notice] 16#16: start worker processes
+2024/09/05 04:39:07 [notice] 16#16: start worker process 17
+2024/09/05 04:39:07 [notice] 16#16: start worker process 18
+2024/09/05 04:39:07 [notice] 16#16: start worker process 19
+2024/09/05 04:39:07 [notice] 16#16: start worker process 20
+2024/09/05 04:39:07 [notice] 16#16: start worker process 21
+2024/09/05 04:39:07 [notice] 16#16: start worker process 22
+2024/09/05 04:39:07 [notice] 16#16: start worker process 23
+2024/09/05 04:39:07 [notice] 16#16: start worker process 24
+2024/09/05 04:39:10 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 04:39:24 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 04:44:26 [notice] 16#16: using the "epoll" event method
+2024/09/05 04:44:26 [notice] 16#16: nginx/1.25.2
+2024/09/05 04:44:26 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 04:44:26 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 04:44:26 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 04:44:26 [notice] 16#16: start worker processes
+2024/09/05 04:44:26 [notice] 16#16: start worker process 17
+2024/09/05 04:44:26 [notice] 16#16: start worker process 18
+2024/09/05 04:44:26 [notice] 16#16: start worker process 19
+2024/09/05 04:44:26 [notice] 16#16: start worker process 20
+2024/09/05 04:44:26 [notice] 16#16: start worker process 21
+2024/09/05 04:44:26 [notice] 16#16: start worker process 22
+2024/09/05 04:44:26 [notice] 16#16: start worker process 23
+2024/09/05 04:44:26 [notice] 16#16: start worker process 24
+2024/09/05 04:44:32 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 04:51:44 [notice] 16#16: using the "epoll" event method
+2024/09/05 04:51:44 [notice] 16#16: nginx/1.25.2
+2024/09/05 04:51:44 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 04:51:44 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 04:51:44 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 04:51:44 [notice] 16#16: start worker processes
+2024/09/05 04:51:44 [notice] 16#16: start worker process 17
+2024/09/05 04:51:44 [notice] 16#16: start worker process 18
+2024/09/05 04:51:44 [notice] 16#16: start worker process 19
+2024/09/05 04:51:44 [notice] 16#16: start worker process 20
+2024/09/05 04:51:44 [notice] 16#16: start worker process 21
+2024/09/05 04:51:44 [notice] 16#16: start worker process 22
+2024/09/05 04:51:44 [notice] 16#16: start worker process 23
+2024/09/05 04:51:44 [notice] 16#16: start worker process 24
+2024/09/05 04:51:52 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 04:52:30 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 05:38:41 [warn] 19#19: *5 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 05:39:18 [notice] 16#16: using the "epoll" event method
+2024/09/05 05:39:18 [notice] 16#16: nginx/1.25.2
+2024/09/05 05:39:18 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 05:39:18 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 05:39:18 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 05:39:18 [notice] 16#16: start worker processes
+2024/09/05 05:39:18 [notice] 16#16: start worker process 17
+2024/09/05 05:39:18 [notice] 16#16: start worker process 18
+2024/09/05 05:39:18 [notice] 16#16: start worker process 19
+2024/09/05 05:39:18 [notice] 16#16: start worker process 20
+2024/09/05 05:39:18 [notice] 16#16: start worker process 21
+2024/09/05 05:39:18 [notice] 16#16: start worker process 22
+2024/09/05 05:39:18 [notice] 16#16: start worker process 23
+2024/09/05 05:39:18 [notice] 16#16: start worker process 24
+2024/09/05 05:39:21 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 05:40:04 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 05:40:23 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET / HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 05:53:02 [warn] 20#20: *13 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/4/00/0000000004 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /profile HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/dashboard"
+2024/09/05 05:53:21 [warn] 20#20: *13 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/5/00/0000000005 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/dashboarf HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 05:53:27 [error] 22#22: *21 open() "/var/www/html/public/js/app.js" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /js/app.js HTTP/1.1", host: "localhost", referrer: "http://localhost/chatify"
+2024/09/05 05:53:27 [error] 17#17: *24 open() "/var/www/html/public/css/app.css" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /css/app.css HTTP/1.1", host: "localhost", referrer: "http://localhost/chatify"
+2024/09/05 05:53:42 [warn] 20#20: *13 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/6/00/0000000006 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /profile HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/login"
+2024/09/05 06:03:52 [notice] 16#16: using the "epoll" event method
+2024/09/05 06:03:52 [notice] 16#16: nginx/1.25.2
+2024/09/05 06:03:52 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 06:03:52 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 06:03:52 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 06:03:52 [notice] 16#16: start worker processes
+2024/09/05 06:03:52 [notice] 16#16: start worker process 17
+2024/09/05 06:03:52 [notice] 16#16: start worker process 18
+2024/09/05 06:03:52 [notice] 16#16: start worker process 19
+2024/09/05 06:03:52 [notice] 16#16: start worker process 20
+2024/09/05 06:03:52 [notice] 16#16: start worker process 21
+2024/09/05 06:03:52 [notice] 16#16: start worker process 22
+2024/09/05 06:03:52 [notice] 16#16: start worker process 23
+2024/09/05 06:03:52 [notice] 16#16: start worker process 24
+2024/09/05 06:15:09 [notice] 16#16: using the "epoll" event method
+2024/09/05 06:15:09 [notice] 16#16: nginx/1.25.2
+2024/09/05 06:15:09 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 06:15:09 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 06:15:09 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 06:15:09 [notice] 16#16: start worker processes
+2024/09/05 06:15:09 [notice] 16#16: start worker process 17
+2024/09/05 06:15:09 [notice] 16#16: start worker process 18
+2024/09/05 06:15:09 [notice] 16#16: start worker process 19
+2024/09/05 06:15:09 [notice] 16#16: start worker process 20
+2024/09/05 06:15:09 [notice] 16#16: start worker process 21
+2024/09/05 06:15:09 [notice] 16#16: start worker process 22
+2024/09/05 06:15:09 [notice] 16#16: start worker process 23
+2024/09/05 06:15:09 [notice] 16#16: start worker process 24
+2024/09/05 06:16:51 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /phpmyadmin/index.php?route=/database/export&db=student_manager HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 06:18:27 [notice] 16#16: using the "epoll" event method
+2024/09/05 06:18:27 [notice] 16#16: nginx/1.25.2
+2024/09/05 06:18:27 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 06:18:27 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 06:18:27 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 06:18:27 [notice] 16#16: start worker processes
+2024/09/05 06:18:27 [notice] 16#16: start worker process 17
+2024/09/05 06:18:27 [notice] 16#16: start worker process 18
+2024/09/05 06:18:27 [notice] 16#16: start worker process 19
+2024/09/05 06:18:27 [notice] 16#16: start worker process 20
+2024/09/05 06:18:27 [notice] 16#16: start worker process 21
+2024/09/05 06:18:27 [notice] 16#16: start worker process 22
+2024/09/05 06:18:27 [notice] 16#16: start worker process 23
+2024/09/05 06:18:27 [notice] 16#16: start worker process 24
+2024/09/05 06:19:46 [notice] 16#16: using the "epoll" event method
+2024/09/05 06:19:46 [notice] 16#16: nginx/1.25.2
+2024/09/05 06:19:46 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 06:19:46 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 06:19:46 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 06:19:46 [notice] 16#16: start worker processes
+2024/09/05 06:19:46 [notice] 16#16: start worker process 17
+2024/09/05 06:19:46 [notice] 16#16: start worker process 18
+2024/09/05 06:19:46 [notice] 16#16: start worker process 19
+2024/09/05 06:19:46 [notice] 16#16: start worker process 20
+2024/09/05 06:19:46 [notice] 16#16: start worker process 21
+2024/09/05 06:19:46 [notice] 16#16: start worker process 22
+2024/09/05 06:19:46 [notice] 16#16: start worker process 23
+2024/09/05 06:19:46 [notice] 16#16: start worker process 24
+2024/09/05 06:19:53 [warn] 17#17: *1 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/role HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 06:21:15 [notice] 16#16: using the "epoll" event method
+2024/09/05 06:21:15 [notice] 16#16: nginx/1.25.2
+2024/09/05 06:21:15 [notice] 16#16: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2024/09/05 06:21:15 [notice] 16#16: OS: Linux 6.10.0-linuxkit
+2024/09/05 06:21:15 [notice] 16#16: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/09/05 06:21:15 [notice] 16#16: start worker processes
+2024/09/05 06:21:15 [notice] 16#16: start worker process 17
+2024/09/05 06:21:15 [notice] 16#16: start worker process 18
+2024/09/05 06:21:15 [notice] 16#16: start worker process 19
+2024/09/05 06:21:15 [notice] 16#16: start worker process 20
+2024/09/05 06:21:15 [notice] 16#16: start worker process 21
+2024/09/05 06:21:15 [notice] 16#16: start worker process 22
+2024/09/05 06:21:15 [notice] 16#16: start worker process 23
+2024/09/05 06:21:15 [notice] 16#16: start worker process 24
+2024/09/05 06:28:54 [error] 21#21: *12 open() "/var/www/html/public/storage/uploads/1723524521-66bae5a98879d.jpeg" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /storage/uploads/1723524521-66bae5a98879d.jpeg HTTP/1.1", host: "localhost", referrer: "http://localhost/admin/students/2/subject"
+2024/09/05 06:30:06 [error] 23#23: *18 open() "/var/www/html/public/storage/uploads/1723524521-66bae5a98879d.jpeg" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /storage/uploads/1723524521-66bae5a98879d.jpeg HTTP/1.1", host: "localhost", referrer: "http://localhost/admin/students/2/subject"
+2024/09/05 06:30:11 [error] 23#23: *18 open() "/var/www/html/public/storage/uploads/1723524521-66bae5a98879d.jpeg" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /storage/uploads/1723524521-66bae5a98879d.jpeg HTTP/1.1", host: "localhost", referrer: "http://localhost/admin/students/2/subject"
+2024/09/05 06:44:43 [error] 17#17: *39 open() "/var/www/html/public/storage/uploads/1723524521-66bae5a98879d.jpeg" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /storage/uploads/1723524521-66bae5a98879d.jpeg HTTP/1.1", host: "localhost", referrer: "http://localhost/admin/students/2/subject"
+2024/09/05 06:45:02 [error] 17#17: *39 open() "/var/www/html/public/storage/uploads/1723524521-66bae5a98879d.jpeg" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /storage/uploads/1723524521-66bae5a98879d.jpeg HTTP/1.1", host: "localhost", referrer: "http://localhost/admin/students/2/subject"
+2024/09/05 06:45:19 [error] 17#17: *39 open() "/var/www/html/public/storage/uploads/1723524521-66bae5a98879d.jpeg" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /storage/uploads/1723524521-66bae5a98879d.jpeg HTTP/1.1", host: "localhost", referrer: "http://localhost/admin/students/2/subject"
+2024/09/05 06:45:25 [error] 17#17: *39 open() "/var/www/html/public/storage/uploads/1723524521-66bae5a98879d.jpeg" failed (2: No such file or directory), client: 192.168.65.1, server: miduner.local, request: "GET /storage/uploads/1723524521-66bae5a98879d.jpeg HTTP/1.1", host: "localhost", referrer: "http://localhost/admin/students/2/subject"
+2024/09/05 07:50:09 [warn] 17#17: *60 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=&status%5B%5D="
+2024/09/05 07:51:08 [warn] 17#17: *60 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=&status%5B%5D="
+2024/09/05 07:53:18 [warn] 17#17: *70 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=&status%5B%5D="
+2024/09/05 07:54:00 [warn] 17#17: *70 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/4/00/0000000004 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=&status%5B%5D="
+2024/09/05 07:54:16 [warn] 17#17: *70 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/5/00/0000000005 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=&status%5B%5D="
+2024/09/05 07:54:17 [warn] 17#17: *70 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/6/00/0000000006 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=&status%5B%5D="
+2024/09/05 08:02:38 [warn] 17#17: *80 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/7/00/0000000007 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=&status%5B%5D="
+2024/09/05 08:22:20 [warn] 18#18: *86 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/8/00/0000000008 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone&status%5B%5D= HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone"
+2024/09/05 08:25:48 [warn] 18#18: *89 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/9/00/0000000009 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone&status%5B%5D= HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone"
+2024/09/05 08:26:27 [warn] 18#18: *89 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/0/01/0000000010 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone&status%5B%5D= HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone"
+2024/09/05 08:30:27 [warn] 18#18: *97 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/1/01/0000000011 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone&status%5B%5D= HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone"
+2024/09/05 08:54:44 [warn] 18#18: *101 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/2/01/0000000012 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone&status%5B%5D= HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone"
+2024/09/05 08:56:05 [warn] 18#18: *105 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/3/01/0000000013 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone&status%5B%5D= HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone"
+2024/09/05 08:57:03 [warn] 18#18: *105 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/4/01/0000000014 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone&status%5B%5D= HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost", referrer: "http://localhost/admin/students?size=10&age_from=&age_to=&score_from=&score_to=&network%5B%5D=mobifone"
+2024/09/05 09:07:07 [warn] 18#18: *115 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/5/01/0000000015 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /phpmyadmin/ HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 09:07:07 [warn] 18#18: *117 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/6/01/0000000016 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /phpmyadmin/ HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 09:07:19 [warn] 18#18: *117 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/7/01/0000000017 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/telescope HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"
+2024/09/05 09:07:27 [warn] 18#18: *117 an upstream response is buffered to a temporary file /var/cache/nginx/fastcgi_temp/8/01/0000000018 while reading upstream, client: 192.168.65.1, server: miduner.local, request: "GET /admin/telescope HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.2-fpm.sock:", host: "localhost"

@@ -42,26 +42,25 @@ class StudentRepository extends BaseRepository
 
         if (!empty($data['network']) && array_filter($data['network'])) {
             $data['network'] = array_filter($data['network']);
-            $conditions = [];
-            foreach ($data['network'] as $network) {
-                $networkEnum = Network::from($network);
-                switch ($networkEnum) {
-                    case Network::VINAPHONE:
-                        $conditions[] = "phone REGEXP '^08[2-5]'";
-                        break;
-                    case Network::VIETTEL:
-                        $conditions[] = "phone REGEXP '^03[2-9]|^09[0-9]|^086'";
-                        break;
-                    case Network::MOBIFONE:
-                        $conditions[] = "phone REGEXP '^07[0-9]'";
-                        break;
-                    default:
-                        break;
+
+            $query->where(function ($query) use ($data) {
+                foreach ($data['network'] as $network) {
+                    $networkEnum = Network::from($network);
+                    switch ($networkEnum) {
+                        case Network::VINAPHONE:
+                            $query->orWhere('phone', 'REGEXP', '^08[2-5]');
+                            break;
+                        case Network::VIETTEL:
+                            $query->orWhere('phone', 'REGEXP', '^03[2-9]|^09[0-9]|^086');
+                            break;
+                        case Network::MOBIFONE:
+                            $query->orWhere('phone', 'REGEXP', '^07[0-9]');
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            if (!empty($conditions)) {
-                $query->whereRaw('(' . implode(' OR ', $conditions) . ')');
-            }
+            });
         }
 
         if (!empty($data['status']) && array_filter($data['status'])) {
