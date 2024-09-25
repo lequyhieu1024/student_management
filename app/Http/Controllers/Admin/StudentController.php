@@ -176,6 +176,7 @@ class StudentController extends Controller
 
     public function updateScores(ScoreFormRequest $request, $studentId)
     {
+        dd($request->all());
         $this->studentRepository->updateScore($studentId, $request->scores);
         return redirect()->back()->with('success', __('Updated Successfully'));
     }
